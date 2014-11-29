@@ -16,16 +16,15 @@ import java.util.Map;
  */
 public class MedicalDeviceInventory {
     
-    private Map<MedicalDevice, Integer> medicalDeviceList;
+    private ArrayList<MedicalDevice> medicalDeviceList;
 
     public MedicalDeviceInventory() {
-        medicalDeviceList = new HashMap<>();
+        medicalDeviceList = new ArrayList<>();
     }
 
-    public Map<MedicalDevice, Integer> getMedicalDeviceList() {
+    public ArrayList<MedicalDevice> getMedicalDeviceList() {
         return medicalDeviceList;
     }
-    
     
     
 }
