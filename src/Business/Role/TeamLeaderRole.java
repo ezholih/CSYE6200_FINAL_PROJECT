@@ -9,7 +9,7 @@ import Business.EnterPrise.Enterprise;
 import Business.Organization.DoctorOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import UserInterface.DoctorRole.TeamLeaderWorkAreaJPanel;
+import UserInterface.TeamLeaderRole.TeamLeaderWorkAreaJPanel;
 import javax.swing.JPanel;
 
 /**
