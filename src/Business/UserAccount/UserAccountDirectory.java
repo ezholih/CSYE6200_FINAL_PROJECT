@@ -15,13 +15,27 @@ import java.util.ArrayList;
 public class UserAccountDirectory {
     
     private ArrayList<UserAccount> userAccountList;
+    private ArrayList<UserAccount> uaVacancyList;
 
     public UserAccountDirectory() {
         userAccountList = new ArrayList<>();
+        uaVacancyList = new ArrayList<>();
     }
 
     public ArrayList<UserAccount> getUserAccountList() {
         return userAccountList;
+    }
+
+    public ArrayList<UserAccount> getUaVacancyList() {
+        return uaVacancyList;
+    }
+    
+    public void removeUaVacancy(UserAccount ua){
+        uaVacancyList.remove(ua);
+    }
+    
+    public void addUaVacancy(UserAccount ua){
+        uaVacancyList.add(ua);
     }
     
     public UserAccount authenticateUser(String username, String password){
@@ -39,6 +53,7 @@ public class UserAccountDirectory {
         userAccount.setEmployee(employee);
         userAccount.setRole(role);
         userAccountList.add(userAccount);
+        uaVacancyList.add(userAccount);
         return userAccount;
     }
 }

@@ -32,6 +32,7 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
         newDeviceJButton = new javax.swing.JButton();
         reservationJButton = new javax.swing.JButton();
         reservationJButton1 = new javax.swing.JButton();
+        viewDeviceJButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Asset Admin Work Area");
@@ -44,6 +45,9 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
 
         reservationJButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         reservationJButton1.setText("Device Maintenance Management >>");
+
+        viewDeviceJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        viewDeviceJButton.setText("View Inventory >>");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -59,7 +63,8 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(reservationJButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(newDeviceJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(reservationJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(reservationJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(viewDeviceJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(92, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -69,11 +74,13 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(69, 69, 69)
                 .addComponent(newDeviceJButton)
-                .addGap(49, 49, 49)
+                .addGap(43, 43, 43)
                 .addComponent(reservationJButton)
-                .addGap(38, 38, 38)
+                .addGap(44, 44, 44)
                 .addComponent(reservationJButton1)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addComponent(viewDeviceJButton)
+                .addContainerGap(75, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -83,5 +90,6 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton newDeviceJButton;
     private javax.swing.JButton reservationJButton;
     private javax.swing.JButton reservationJButton1;
+    private javax.swing.JButton viewDeviceJButton;
     // End of variables declaration//GEN-END:variables
 }
