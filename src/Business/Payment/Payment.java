@@ -20,7 +20,17 @@ public class Payment {
     private UserAccount payBy;
     private UserAccount payTo;
     private Date paymentDate;
+    private String paymentType;
 
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    
     public Payment(Bill bill) {
         this.bill = bill;
         paymentDate = new Date();

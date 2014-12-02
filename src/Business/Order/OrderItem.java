@@ -7,6 +7,7 @@
 package Business.Order;
 
 import Business.MedicalDevice.MedicalDevice;
+import Business.MedicalDevice.MedicalDeviceProduct;
 
 /**
  *
@@ -14,16 +15,18 @@ import Business.MedicalDevice.MedicalDevice;
  */
 public class OrderItem {
     
-    private MedicalDevice medicalDevice;
+    private MedicalDeviceProduct mdProduct;
     private int quantity;
 
-    public MedicalDevice getMedicalDevice() {
-        return medicalDevice;
+    public MedicalDeviceProduct getMdProduct() {
+        return mdProduct;
     }
 
-    public void setMedicalDevice(MedicalDevice medicalDevice) {
-        this.medicalDevice = medicalDevice;
+    public void setMdProduct(MedicalDeviceProduct mdProduct) {
+        this.mdProduct = mdProduct;
     }
+    
+    
 
     public int getQuantity() {
         return quantity;
@@ -34,7 +37,7 @@ public class OrderItem {
     }
     
     public String toString(){
-        return this.medicalDevice.toString();
+        return this.mdProduct.toString();
     }
     
 }

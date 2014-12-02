@@ -87,6 +87,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Enterprise Name");
 
+        createJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         createJButton.setText("Create Enterprise");
         createJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,6 +95,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
             }
         });
 
+        BackJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         BackJButton.setText("<< Back");
         BackJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -9,8 +9,11 @@ package UserInterface.SystemAdminRole;
 import Business.EcoSystem;
 import Business.Employee.Employee;
 import Business.EnterPrise.Enterprise;
+import Business.EnterPrise.Enterprise.EnterpriseType;
 import Business.Network.Network;
+import Business.Role.HSPAdminRole;
 import Business.Role.PHSAdminRole;
+import Business.Role.SUPAdminRole;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -102,6 +105,7 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
 
         enterpriseJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        createJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         createJButton.setText("Submit");
         createJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,6 +113,7 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
             }
         });
 
+        BackJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         BackJButton.setText("<< Back");
         BackJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,7 +197,13 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
         String name = txtName.getText();
         
         Employee  employee = enterprise.getEmployeeDirectory().createEmployee(name);
-        UserAccount account = enterprise.getUserAccountDirectory().createUserAccount(userName, password, employee, new PHSAdminRole());
+        if(enterprise.getEnterpriseType().equals(EnterpriseType.PHS)){
+            UserAccount account = enterprise.getUserAccountDirectory().createUserAccount(userName, password, employee, new PHSAdminRole());
+        }else if (enterprise.getEnterpriseType().equals(EnterpriseType.Hospital)){
+            enterprise.getUserAccountDirectory().createUserAccount(userName, password, employee, new HSPAdminRole());
+        }else if (enterprise.getEnterpriseType().equals(EnterpriseType.Supplier)){
+            enterprise.getUserAccountDirectory().createUserAccount(userName, password, employee, new SUPAdminRole());
+        }
     }//GEN-LAST:event_createJButtonActionPerformed
 
     private void BackJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackJButtonActionPerformed

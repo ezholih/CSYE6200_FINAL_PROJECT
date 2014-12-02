@@ -6,6 +6,12 @@
 
 package UserInterface.SupplierRole;
 
+import Business.EcoSystem;
+import Business.Organization.SupplierOrganization;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Martin
@@ -15,8 +21,17 @@ public class SupplierWokAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form SupplierWokAreaJPanel
      */
-    public SupplierWokAreaJPanel() {
+    private JPanel userProcessContainer;
+    private SupplierOrganization supplierOrganization;
+    private EcoSystem ecoSystem;
+    private UserAccount userAccount;
+   
+    public SupplierWokAreaJPanel(JPanel upc, SupplierOrganization supOrg, EcoSystem ecosys, UserAccount ua) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.supplierOrganization = supOrg;
+        this.ecoSystem = ecosys;
+        this.userAccount = ua;
     }
 
     /**
@@ -38,6 +53,11 @@ public class SupplierWokAreaJPanel extends javax.swing.JPanel {
 
         mgnProductJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         mgnProductJButton.setText("Product Management >>");
+        mgnProductJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mgnProductJButtonActionPerformed(evt);
+            }
+        });
 
         mgnMaintJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         mgnMaintJButton.setText("Maintenance Service >>");
@@ -76,6 +96,13 @@ public class SupplierWokAreaJPanel extends javax.swing.JPanel {
                 .addContainerGap(151, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mgnProductJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mgnProductJButtonActionPerformed
+        // TODO add your handling code here:
+        ManageProductJPanel mnpjp = new ManageProductJPanel(userProcessContainer, supplierOrganization, userAccount);
+        userProcessContainer.add("ManageProductJPanel", mnpjp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
+    }//GEN-LAST:event_mgnProductJButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

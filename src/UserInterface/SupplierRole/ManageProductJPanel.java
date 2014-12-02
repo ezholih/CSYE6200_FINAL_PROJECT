@@ -6,6 +6,14 @@
 
 package UserInterface.SupplierRole;
 
+import Business.MedicalDevice.MedicalDeviceProduct;
+import Business.Organization.SupplierOrganization;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Martin
@@ -15,8 +23,17 @@ public class ManageProductJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ManageProductJPanel
      */
-    public ManageProductJPanel() {
+    private JPanel userProcessContainer;
+    private SupplierOrganization supplierOrganization;
+    private UserAccount userAccount;
+    
+    public ManageProductJPanel(JPanel upc, SupplierOrganization supOrg, UserAccount ua) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.supplierOrganization = supOrg;
+        this.userAccount = ua;
+        
+        populateTable();
     }
 
     /**
@@ -65,12 +82,22 @@ public class ManageProductJPanel extends javax.swing.JPanel {
 
         addProductJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         addProductJButton.setText("Add Product >>");
+        addProductJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addProductJButtonActionPerformed(evt);
+            }
+        });
 
         delProductJButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         delProductJButton2.setText("Delete Product");
 
         viewProductJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         viewProductJButton.setText("View Product >>");
+        viewProductJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewProductJButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -81,15 +108,15 @@ public class ManageProductJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(backJButton)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(backJButton)
+                                .addComponent(delProductJButton2))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(viewProductJButton))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(delProductJButton2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(addProductJButton))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(addProductJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(viewProductJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -111,6 +138,22 @@ public class ManageProductJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addProductJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductJButtonActionPerformed
+        // TODO add your handling code here:
+        ManageNewProductJPanel mnpjp = new ManageNewProductJPanel(userProcessContainer, supplierOrganization, userAccount);
+        userProcessContainer.add("ManageNewProductJPanel", mnpjp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
+    }//GEN-LAST:event_addProductJButtonActionPerformed
+
+    private void viewProductJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewProductJButtonActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = productJTable.getSelectedRow();
+        MedicalDeviceProduct mdp = (MedicalDeviceProduct)productJTable.getValueAt(selectedRow, 0);
+        if(mdp == null){
+            JOptionPane.showMessageDialog(null, "Please select a product to continue!");
+        }
+    }//GEN-LAST:event_viewProductJButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addProductJButton;
@@ -121,4 +164,19 @@ public class ManageProductJPanel extends javax.swing.JPanel {
     private javax.swing.JTable productJTable;
     private javax.swing.JButton viewProductJButton;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel)productJTable.getModel();
+        dtm.setRowCount(0);
+        
+        for(MedicalDeviceProduct mdp : supplierOrganization.getmDProductCatalog().getMdProductList()){
+            Object[] row = new Object[4];
+            row[0] = mdp;
+            row[1] = mdp.getName();
+            row[2] = mdp.getModel();
+            row[3] = mdp.getPrice();
+            
+            dtm.addRow(row);
+        }
+    }
 }

@@ -7,6 +7,7 @@
 package Business.Order;
 
 import Business.MedicalDevice.MedicalDevice;
+import Business.MedicalDevice.MedicalDeviceProduct;
 import java.util.ArrayList;
 
 /**
@@ -22,9 +23,10 @@ public class Order {
     public Order() {
         oiList = new ArrayList<>();
         orderID = orderID++;
+        status = "Ordered";
     }
-
-    public static int getOrderID() {
+    
+    public int getOrderID() {
         return orderID;
     }
 
@@ -40,10 +42,10 @@ public class Order {
         this.status = status;
     }
     
-    public OrderItem addOrderItem(MedicalDevice device, int quantity){
+    public OrderItem addOrderItem(MedicalDeviceProduct device, int quantity){
         OrderItem oi = new OrderItem();
         oi.setQuantity(quantity);
-        oi.setMedicalDevice(device);
+        oi.setMdProduct(device);
         oiList.add(oi);
         return oi;
     }
@@ -59,7 +61,7 @@ public class Order {
     public double getTotalPrice(){
         double total = 0;
         for(OrderItem oi : this.oiList){
-            total = total + oi.getMedicalDevice().getPrice();
+            total = total + oi.getMdProduct().getPrice();
         }
         return total;
     }

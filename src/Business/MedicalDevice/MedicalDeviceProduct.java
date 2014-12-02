@@ -79,5 +79,7 @@ public class MedicalDeviceProduct {
         this.manufacturer = manufacturer;
     }
     
-    
+    public String toString(){
+        return String.valueOf(productID);
+    }
 }

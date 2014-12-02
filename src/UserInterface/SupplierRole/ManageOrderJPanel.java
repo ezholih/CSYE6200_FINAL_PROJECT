@@ -6,6 +6,22 @@
 
 package UserInterface.SupplierRole;
 
+import Business.EcoSystem;
+import Business.EnterPrise.Enterprise;
+import Business.Network.Network;
+import Business.Order.Order;
+import Business.Order.OrderItem;
+import Business.Organization.FinaceOrganization;
+import Business.Organization.Organization;
+import Business.Organization.SupplierOrganization;
+import Business.Payment.Payment;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Martin
@@ -15,8 +31,23 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ManageOrderJPanel
      */
-    public ManageOrderJPanel() {
+    private JPanel userProcessContainer;
+    private SupplierOrganization supplierOrganization;
+    private FinaceOrganization finaceOrganization;
+    private EcoSystem ecoSystem;
+    
+    public ManageOrderJPanel(JPanel upc, SupplierOrganization supOrg, EcoSystem ecosys) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.supplierOrganization = supOrg;
+        this.ecoSystem = ecosys;
+        this.finaceOrganization = getFinaceOrganization();
+        populateOrderTable();
+        orderJTable.setCellSelectionEnabled(true);
+        ListSelectionModel cellSelectionModel = orderJTable.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        cellSelectionModel.addListSelectionListener(new myListSelectionListener());
+        
     }
 
     /**
@@ -35,6 +66,9 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
         orderJTable = new javax.swing.JTable();
         deliverJButton1 = new javax.swing.JButton();
         backJButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Order Management");
@@ -88,6 +122,12 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Order Table");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Order Item Table");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,28 +135,44 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(deliverJButton1)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(backJButton))
-                .addContainerGap(57, Short.MAX_VALUE))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(backJButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(deliverJButton1))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))))
+                        .addGap(50, 50, 50))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(deliverJButton1)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(backJButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backJButton)
+                    .addComponent(deliverJButton1))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -126,9 +182,86 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
     private javax.swing.JButton backJButton;
     private javax.swing.JButton deliverJButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable orderDetailJTable;
     private javax.swing.JTable orderJTable;
     // End of variables declaration//GEN-END:variables
+
+    
+    private void populateOrderTable() {
+        DefaultTableModel orderTable = (DefaultTableModel)orderJTable.getModel();
+        orderTable.setRowCount(0);
+        
+        for(Order od:supplierOrganization.getOrderLis().getOrderList()){
+            boolean flag = false;
+            Object[] row = new Object[5];
+            row[0] = od;
+            row[1] = od.getTotalPrice();
+            
+            
+            for(Payment pay : finaceOrganization.getPaymentDirectory().getPaymentList()){
+                if(pay.getBill().getOrder().getOrderID() == od.getOrderID()){
+                    row[2] = "Payed";
+                    row[3] = pay.getPaymentType();
+                    flag = true;
+                }
+            }
+            if(flag == false){
+                row[2] = "Ordered";
+                row[3] = "N/A";
+            }
+            if(od.getStatus() != "Delivered"){
+                row[4] = "No";
+            }else row[4] = "Yes";
+            orderTable.addRow(row);
+        }
+    }
+    
+    private void populateOrderItemTable(Order order){
+        DefaultTableModel orderItemTable = (DefaultTableModel)orderJTable.getModel();
+        orderItemTable.setRowCount(0);
+        
+        for(OrderItem oi : order.getOiList()){
+            Object[] row = new Object[5];
+            row[0] = order.getOrderID();
+            row[1] = oi.getMdProduct().getName();
+            row[2] = oi.getMdProduct().getModel();
+            row[3] = oi.getMdProduct().getPrice();
+            row[4] = oi.getQuantity();
+            
+            orderItemTable.addRow(row);
+        }
+        
+    }
+    
+    private FinaceOrganization getFinaceOrganization(){
+        for(Network nw : ecoSystem.getNetworkList()){
+            for(Enterprise ep : nw.getEnterpriseDirectory().getEnterpriseList()){
+                if (ep.getEnterpriseType().equals(Enterprise.EnterpriseType.PHS)){
+                    for(Organization org : ep.getOrganazDirectory().getOrganizationList()){
+                        if(org instanceof FinaceOrganization){
+                            return (FinaceOrganization)org;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    class myListSelectionListener implements ListSelectionListener{
+        public void valueChanged(ListSelectionEvent e) {
+            int selectedRow = orderJTable.getSelectedRow();
+            Order od = (Order)orderJTable.getValueAt(selectedRow, 0);
+            if(od == null){
+                JOptionPane.showMessageDialog(null, "No order is selected!");
+                return;
+            }
+            populateOrderItemTable(od);
+        }
+    }
 }

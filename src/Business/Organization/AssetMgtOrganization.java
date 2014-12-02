@@ -4,6 +4,7 @@
  */
 package Business.Organization;
 
+import Business.Order.OrderCatalog;
 import Business.Role.DoctorRole;
 import Business.Role.Role;
 import java.util.ArrayList;
@@ -13,9 +14,12 @@ import java.util.ArrayList;
  * @author raunak
  */
 public class AssetMgtOrganization extends Organization{
+    
+    private OrderCatalog orderList;
 
     public AssetMgtOrganization() {
         super(Organization.Type.AssetMgt.getValue());
+        orderList = new OrderCatalog();
     }
     
     @Override
