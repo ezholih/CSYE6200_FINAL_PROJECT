@@ -32,6 +32,18 @@ public class OrganizationDirectory {
         else if (type.getValue().equals(Type.Nurse.getValue())){
             organization = new NurseOrganization();
             organizationList.add(organization);
+        }else if(type.getValue().equals(Type.Supplier.getValue())){
+            organization = new SupplierOrganization();
+            organizationList.add(organization);
+        }else if(type.getValue().equals(Type.AssetMgt.getValue())){
+            organization = new AssetMgtOrganization();
+            organizationList.add(organization);
+        }else if(type.getValue().equals(Type.HSPAdmin.getValue())){
+            organization = new HSPAdminOrganization();
+            organizationList.add(organization);
+        }else if(type.getValue().equals(Type.PHSAdmin.getValue())){
+            organization = new PHSAdminOrganization();
+            organizationList.add(organization);
         }
         return organization;
     }

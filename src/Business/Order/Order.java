@@ -6,6 +6,7 @@
 
 package Business.Order;
 
+import Business.EnterPrise.SupplierEnterpise;
 import Business.MedicalDevice.MedicalDevice;
 import Business.MedicalDevice.MedicalDeviceProduct;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Order {
         status = "Ordered";
     }
     
+    
     public int getOrderID() {
         return orderID;
     }
@@ -42,7 +44,7 @@ public class Order {
         this.status = status;
     }
     
-    public OrderItem addOrderItem(MedicalDeviceProduct device, int quantity){
+    public OrderItem createOrderItem(MedicalDeviceProduct device, int quantity){
         OrderItem oi = new OrderItem();
         oi.setQuantity(quantity);
         oi.setMdProduct(device);

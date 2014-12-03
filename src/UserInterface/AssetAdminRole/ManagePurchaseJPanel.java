@@ -6,6 +6,21 @@
 
 package UserInterface.AssetAdminRole;
 
+import Business.Bill.Bill;
+import Business.EnterPrise.Enterprise;
+import Business.EnterPrise.SupplierEnterpise;
+import Business.MedicalDevice.MedicalDeviceProduct;
+import Business.Network.Network;
+import Business.Order.Order;
+import Business.Order.OrderItem;
+import Business.Organization.AssetMgtOrganization;
+import Business.Organization.Organization;
+import Business.Organization.SupplierOrganization;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Martin
@@ -15,8 +30,20 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
     /**
      * Creates new form PurchaseMgnJPanel
      */
-    public ManagePurchaseJPanel() {
+    private JPanel userProcessContainer;
+    private Network network;
+    private Order order;
+    
+    public ManagePurchaseJPanel(JPanel upc, Network nw) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.network = nw;
+        order = getOrderFromPHS();
+        
+        populateComboBox();
+        refreshProductTable();
+        refreshOrderItemTable();
+        
     }
 
     /**
@@ -38,7 +65,7 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
         jTFModQuantity = new javax.swing.JTextField();
         jBTModQuantity = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableProduct = new javax.swing.JTable();
+        productJTable = new javax.swing.JTable();
         jBTRemoveItem = new javax.swing.JButton();
         jBTCheckOut = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -102,7 +129,7 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
             }
         });
 
-        jTableProduct.setModel(new javax.swing.table.DefaultTableModel(
+        productJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -110,18 +137,18 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Name", "Model Number", "Price", "Availability"
+                "Product ID", "Name", "Model", "Price"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableProduct);
+        jScrollPane1.setViewportView(productJTable);
 
         jBTRemoveItem.setText("Remove Item");
         jBTRemoveItem.addActionListener(new java.awt.event.ActionListener() {
@@ -244,36 +271,38 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
 
     private void jBTAddToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTAddToCartActionPerformed
         // TODO add your handling code here:
-        int selectedRow = jTableProduct.getSelectedRow();
+        int selectedRow = productJTable.getSelectedRow();
         if (selectedRow < 0) {
             return;
         }
 
-        Product p = (Product) jTableProduct.getValueAt(selectedRow, 0);
+        MedicalDeviceProduct p = (MedicalDeviceProduct) productJTable.getValueAt(selectedRow, 0);
         int quantity = (Integer) jSpinnerQuantity.getValue();
-        if (quantity > p.getAvail()) {
-            JOptionPane.showMessageDialog(null, "The desired quantity exceeds availability!");
-            return;
-        }
-        avail = p.getAvail();
-
-        OrderItem oi = order.addOrderItem(p, quantity);
-        p.setAvail(p.getAvail() - quantity);
-        refreshTwoTables();
+        
+//        Object selected = jCBSupplier.getSelectedItem();
+//        if (selected instanceof Enterprise) {
+//            for(Organization org : ((SupplierEnterpise)selected).getOrganazDirectory().getOrganizationList()){
+//                order = ((SupplierOrganization)org).getOrderLis().createOrder();
+//            }
+//        }
+        OrderItem oi = order.createOrderItem(p, quantity);
+        oi.setEnterprise(((SupplierEnterpise)jCBSupplier.getSelectedItem()));
+        refreshOrderItemTableByOrder(order);
     }//GEN-LAST:event_jBTAddToCartActionPerformed
 
     private void jBTViewProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTViewProductActionPerformed
         // TODO add your handling code here:
-        int selectedRow = jTableProduct.getSelectedRow();
+        int selectedRow = productJTable.getSelectedRow();
         if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "No product is selected!");
             return;
         }
 
-        Product p = (Product) jTableProduct.getValueAt(selectedRow, 0);
-        ViewProductDetailsJPanel vpdjp = new ViewProductDetailsJPanel(userProcessontainer, p);
-        userProcessontainer.add("ViewProductDetailsJPanel", vpdjp);
-        CardLayout layout = (CardLayout) userProcessontainer.getLayout();
-        layout.next(userProcessontainer);
+        MedicalDeviceProduct p = (MedicalDeviceProduct) productJTable.getValueAt(selectedRow, 0);
+        ViewProductJPanel vpdjp = new ViewProductJPanel(userProcessContainer, p);
+        userProcessContainer.add("ViewProductJPanel", vpdjp);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_jBTViewProductActionPerformed
 
     private void jTFModQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFModQuantityActionPerformed
@@ -295,17 +324,8 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
             return;
         }
         OrderItem oi = (OrderItem) jTableOrderItem.getValueAt(selectedRow, 0);
-        int oldQuantity = oi.getQuantity();
-        int curAvail = oi.getProduct().getAvail();
-
-        if (newQuantity > (oldQuantity + curAvail) || newQuantity <= 0) {
-            return;
-        }
-
         oi.setQuantity(newQuantity);
-        oi.getProduct().setAvail((avail - newQuantity));
-
-        refreshTwoTables();
+        refreshOrderItemTable();
     }//GEN-LAST:event_jBTModQuantityActionPerformed
 
     private void jBTRemoveItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTRemoveItemActionPerformed
@@ -317,10 +337,18 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
         int result = JOptionPane.showConfirmDialog(null, "Would you like to delete this order item?", "Warning", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             OrderItem oi = (OrderItem) jTableOrderItem.getValueAt(selectedRow, 0);
-            oi.getProduct().setAvail(avail);
             order.deleteOI(oi);
-            refreshTwoTables();
-
+            for (Enterprise ep : network.getEnterpriseDirectory().getEnterpriseList()) {
+                if (ep.getEnterpriseType().equals(Enterprise.EnterpriseType.Supplier)) {
+                    for (Organization org : ep.getOrganazDirectory().getOrganizationList()) {
+                        if (org instanceof SupplierOrganization) {
+                            Order od = ((SupplierOrganization)org).getOrderLis().searchOrderItem(oi);
+                            od.deleteOI(oi);
+                        }
+                    }
+                }
+            }
+            refreshOrderItemTable();
         }
     }//GEN-LAST:event_jBTRemoveItemActionPerformed
 
@@ -328,41 +356,40 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
         if (order == null || order.getOiList().size() <= 0) {
             JOptionPane.showConfirmDialog(null, "Shopping cart is enmpty!", "WARNING", JOptionPane.OK_OPTION);
         } else {
-            order.setOrderNum(odCount);
-            Order od = (Order) order.clone();
-            od.copyOiList(order.getOiList());
-            od.setStatus("Created");
-            ShippingRequest sr = new ShippingRequest();
-            sr.setOrder(od);
-            sr.setSender(userAccount);
-            sr.setMessage("Request Approval");
-            salesOrg.getWorkQueue().getWorkRequestList().add(sr);
-            customerOrderCatalog.addOrder(od);
-            for (OrderItem oi : order.getOiList()) {
-                oi.getProduct().setSellCount(oi.getQuantity());
+            Order od = null;
+            for (Enterprise ep : network.getEnterpriseDirectory().getEnterpriseList()) {
+                if (ep.getEnterpriseType().equals(Enterprise.EnterpriseType.Supplier)) {
+                    for (Organization org : ep.getOrganazDirectory().getOrganizationList()) {
+                        if (org instanceof SupplierOrganization) {
+                            od = ((SupplierOrganization) org).getOrderLis().createOrder();
+                            for(OrderItem oi : order.getOiList()){
+                                if(oi.getEnterprise().equals(ep)){
+                                    od.getOiList().add(oi);
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            order.clearOI();
-            odCount++;
 
-            JOptionPane.showMessageDialog(null, "Thanks for shopping at Pick&Buy!", "Thanks", JOptionPane.YES_OPTION);
-            refreshProductTable();
-            refreshOderItemTable();
+            JOptionPane.showMessageDialog(null, "Order has been created!", "Thanks", JOptionPane.YES_OPTION);
+            refreshOrderItemTableByOrder(new Order());
         }
     }//GEN-LAST:event_jBTCheckOutActionPerformed
 
     private void jCBSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBSupplierActionPerformed
         Object selected = jCBSupplier.getSelectedItem();
-        if (selected instanceof Supplier) {
-            refreshProductTableBySupplier((Supplier) selected);
+        if (selected instanceof Enterprise) {
+            refreshProductTableBySupplier((SupplierEnterpise)selected);
         } else {
             refreshProductTable();
         }
     }//GEN-LAST:event_jCBSupplierActionPerformed
 
     private void jBTBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTBackActionPerformed
-        userProcessontainer.remove(this);
-        CardLayout layout = (CardLayout) userProcessontainer.getLayout();
-        layout.previous(userProcessontainer);
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_jBTBackActionPerformed
 
 
@@ -385,6 +412,106 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
     private javax.swing.JSpinner jSpinnerQuantity;
     private javax.swing.JTextField jTFModQuantity;
     private javax.swing.JTable jTableOrderItem;
-    private javax.swing.JTable jTableProduct;
+    private javax.swing.JTable productJTable;
     // End of variables declaration//GEN-END:variables
+
+    private void refreshProductTable() {
+        DefaultTableModel dtm = (DefaultTableModel)productJTable.getModel();
+        dtm.setRowCount(0);
+        
+        for(Enterprise ep : network.getEnterpriseDirectory().getEnterpriseList()){
+            if(ep.getEnterpriseType().equals(Enterprise.EnterpriseType.Supplier)){
+                for(Organization org : ep.getOrganazDirectory().getOrganizationList()){
+                    if(org instanceof SupplierOrganization){
+                        for(MedicalDeviceProduct mdp : ((SupplierOrganization)org).getmDProductCatalog().getMdProductList()){
+                            Object[] row = new Object[4];
+                            row[0] = mdp;
+                            row[1] = mdp.getName();
+                            row[2] = mdp.getModel();
+                            row[3] = mdp.getPrice();
+                            
+                            dtm.addRow(row);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private void populateComboBox(){
+        jCBSupplier.removeAllItems();
+        
+        for(Enterprise ep : network.getEnterpriseDirectory().getEnterpriseList()){
+            if(ep.getEnterpriseType().equals(Enterprise.EnterpriseType.Supplier)){
+                        jCBSupplier.addItem(ep);
+            }
+        }
+    
+    }
+
+    private void refreshProductTableBySupplier(Enterprise ep) {
+        DefaultTableModel dtm = (DefaultTableModel)productJTable.getModel();
+        dtm.setRowCount(0);
+        
+        for(Organization org : ep.getOrganazDirectory().getOrganizationList()){
+            if (org instanceof SupplierOrganization) {
+                for (MedicalDeviceProduct mdp : ((SupplierOrganization) org).getmDProductCatalog().getMdProductList()) {
+                    Object[] row = new Object[4];
+                    row[0] = mdp;
+                    row[1] = mdp.getName();
+                    row[2] = mdp.getModel();
+                    row[3] = mdp.getPrice();
+
+                    dtm.addRow(row);
+                }
+            }
+        }
+    }
+
+    private Order getOrderFromPHS() {
+        Order od = null;
+        for (Enterprise ep : network.getEnterpriseDirectory().getEnterpriseList()) {
+            if (ep.getEnterpriseType().equals(Enterprise.EnterpriseType.PHS)) {
+                for (Organization org : ep.getOrganazDirectory().getOrganizationList()) {
+                    if (org instanceof AssetMgtOrganization) {
+                        od = ((AssetMgtOrganization)org).getOrderList().createOrder();
+                    }
+                }
+                break;
+            }
+        }
+        return od;
+    }
+
+    private  void refreshOrderItemTable() {
+        DefaultTableModel dtm = (DefaultTableModel) jTableOrderItem.getModel();
+        dtm.setRowCount(0);
+        
+        if(order != null){
+            for (OrderItem oi : order.getOiList()) {
+                Object[] row = new Object[4];
+                row[0] = oi;
+                row[1] = oi.getMdProduct().getPrice();
+                row[2] = oi.getQuantity();
+                row[3] = oi.getMdProduct().getPrice() * oi.getQuantity();
+
+                dtm.addRow(row);
+            }
+        }
+    }
+    
+    private void refreshOrderItemTableByOrder(Order od){
+        DefaultTableModel dtm = (DefaultTableModel) jTableOrderItem.getModel();
+        dtm.setRowCount(0);
+
+        for (OrderItem oi : od.getOiList()) {
+            Object[] row = new Object[4];
+            row[0] = oi;
+            row[1] = oi.getMdProduct().getPrice();
+            row[2] = oi.getQuantity();
+            row[3] = oi.getMdProduct().getPrice() * oi.getQuantity();
+
+            dtm.addRow(row);
+        }
+    } 
 }

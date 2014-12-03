@@ -7,9 +7,11 @@
 package UserInterface.SupplierRole;
 
 import Business.EcoSystem;
+import Business.Organization.Organization;
 import Business.Organization.SupplierOrganization;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -26,10 +28,14 @@ public class SupplierWokAreaJPanel extends javax.swing.JPanel {
     private EcoSystem ecoSystem;
     private UserAccount userAccount;
    
-    public SupplierWokAreaJPanel(JPanel upc, SupplierOrganization supOrg, EcoSystem ecosys, UserAccount ua) {
+    public SupplierWokAreaJPanel(JPanel upc, Organization supOrg, EcoSystem ecosys, UserAccount ua) {
         initComponents();
         this.userProcessContainer = upc;
-        this.supplierOrganization = supOrg;
+        if(supOrg instanceof SupplierOrganization){
+            this.supplierOrganization = (SupplierOrganization)supOrg;
+        }else{
+            JOptionPane.showMessageDialog(null, "Invalid Organization!");
+        }
         this.ecoSystem = ecosys;
         this.userAccount = ua;
     }
@@ -61,9 +67,19 @@ public class SupplierWokAreaJPanel extends javax.swing.JPanel {
 
         mgnMaintJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         mgnMaintJButton.setText("Maintenance Service >>");
+        mgnMaintJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mgnMaintJButtonActionPerformed(evt);
+            }
+        });
 
         mgnOrderJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         mgnOrderJButton.setText("Order Management >>");
+        mgnOrderJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mgnOrderJButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -103,6 +119,20 @@ public class SupplierWokAreaJPanel extends javax.swing.JPanel {
         userProcessContainer.add("ManageProductJPanel", mnpjp);
         ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
     }//GEN-LAST:event_mgnProductJButtonActionPerformed
+
+    private void mgnOrderJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mgnOrderJButtonActionPerformed
+        // TODO add your handling code here:
+        ManageOrderJPanel mojp = new ManageOrderJPanel(userProcessContainer, supplierOrganization, ecoSystem);
+        userProcessContainer.add("ManageOrderJPanel", mojp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
+    }//GEN-LAST:event_mgnOrderJButtonActionPerformed
+
+    private void mgnMaintJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mgnMaintJButtonActionPerformed
+        // TODO add your handling code here:
+        ManageMaintJPanel mmjp = new ManageMaintJPanel(userProcessContainer, userAccount);
+        userProcessContainer.add("ManageMaintJPanel", mmjp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
+    }//GEN-LAST:event_mgnMaintJButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

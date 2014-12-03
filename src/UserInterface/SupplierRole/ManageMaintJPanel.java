@@ -6,6 +6,18 @@
 
 package UserInterface.SupplierRole;
 
+import Business.Maintenance.MaintSchedule;
+import Business.MedicalDevice.MedicalDevice;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Martin
@@ -15,8 +27,19 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ManageMaintJPanel
      */
-    public ManageMaintJPanel() {
+    private JPanel userProcessContainer;
+    private UserAccount userAccount;
+    
+    public ManageMaintJPanel(JPanel upc, UserAccount ua) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.userAccount = ua;
+        
+        poplateRequestTable();
+        maintenanceJTable.setCellSelectionEnabled(true);
+        ListSelectionModel cellSelectionModel = maintenanceJTable.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        cellSelectionModel.addListSelectionListener(new myListSelectionListener());
     }
 
     /**
@@ -41,21 +64,21 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
         submitJButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Maintenance Management");
+        jLabel1.setText("Maintenance Request Management");
 
         maintenanceJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Device Name", "Device Model", "Service Type"
+                "Device ID", "Name", "Model", "Service Type"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -84,9 +107,19 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
 
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
+        backJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backJButtonActionPerformed(evt);
+            }
+        });
 
         submitJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        submitJButton.setText("Submit");
+        submitJButton.setText("Served");
+        submitJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitJButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -132,6 +165,31 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
+        // TODO add your handling code here:
+        userProcessContainer.remove(this);
+        ((CardLayout)userProcessContainer.getLayout()).previous(userProcessContainer);        
+    }//GEN-LAST:event_backJButtonActionPerformed
+
+    private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = maintenanceJTable.getSelectedRow();
+        MedicalDevice md = (MedicalDevice)maintenanceJTable.getValueAt(selectedRow, 0);
+        if(md == null){
+            JOptionPane.showMessageDialog(null, "No request is selected!");
+            return;
+        }else{
+            MaintSchedule ms = md.getMaintScheduleHistory().newMaintenance();
+            ms.setLastMaintDate(new Date());
+            ms.setNextMaintDate();
+            if(ms.getmType().equals(MaintSchedule.MaintType.REP)){
+                ms.setFixDesp(solutionJTxtArea.getText());
+            }
+            userAccount.getMaintRequestList().getMaintDevicesList().remove(md);
+            poplateRequestTable();
+        }
+    }//GEN-LAST:event_submitJButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backJButton;
@@ -146,4 +204,35 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
     private javax.swing.JTextArea solutionJTxtArea;
     private javax.swing.JButton submitJButton;
     // End of variables declaration//GEN-END:variables
+
+    private void poplateRequestTable() {
+        DefaultTableModel dtm = (DefaultTableModel)maintenanceJTable.getModel();
+        dtm.setRowCount(0);
+        
+        for(MedicalDevice md : userAccount.getMaintRequestList().getMaintDevicesList()){
+            Object[] row = new Object[4];
+            row [0] = md;
+            row [1] = md.getName();
+            row [2] = md.getModel();
+            row [3] = md.getMaintScheduleHistory().getLastMaintenace().getmType();
+            
+            dtm.addRow(row);
+        }
+    }
+    
+    class myListSelectionListener implements ListSelectionListener{
+        public void valueChanged(ListSelectionEvent e) {
+            int selectedRow = maintenanceJTable.getSelectedRow();
+            MedicalDevice md = (MedicalDevice)maintenanceJTable.getValueAt(selectedRow, 0);
+            if(md == null){
+                JOptionPane.showMessageDialog(null, "No request is selected!");
+                return;
+            }
+            if(md.getMaintScheduleHistory().getLastMaintenace().getmType().equals(MaintSchedule.MaintType.REP)){
+                problemJTxtArea.setEnabled(true);
+                problemJTxtArea.setText(md.getMaintScheduleHistory().getLastMaintenace().getProblemDesp());
+                solutionJTxtArea.setEnabled(true);
+            }
+        }
+    }
 }

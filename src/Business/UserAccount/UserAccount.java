@@ -5,6 +5,7 @@
 package Business.UserAccount;
 
 import Business.Employee.Employee;
+import Business.Maintenance.MaintRequestList;
 import Business.Role.Role;
 import Business.WorkQueue.WorkQueue;
 
@@ -19,12 +20,16 @@ public class UserAccount {
     private Employee employee;
     private Role role;
     private WorkQueue workQueue;
+    private MaintRequestList maintRequestList;
 
     public UserAccount() {
         workQueue = new WorkQueue();
+        maintRequestList = new MaintRequestList();
     }
-    
-    
+
+    public MaintRequestList getMaintRequestList() {
+        return maintRequestList;
+    }
     
     public String getUsername() {
         return username;

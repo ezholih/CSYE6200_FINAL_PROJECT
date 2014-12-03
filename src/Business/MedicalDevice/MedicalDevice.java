@@ -18,27 +18,18 @@ import java.util.Date;
 public class MedicalDevice extends MedicalDeviceProduct{
     
     private static int deviceID = 1;
-    private String SN;
     private MaintHistory maintScheduleHistory;
     private Date manufactureDate;
     private String status;
 
-    public MedicalDevice() {
+    public MedicalDevice(MaintSchedule.MaintType mType, int interval) {
         deviceID++;
         deviceID = super.getProductID()*100+deviceID;
-        maintScheduleHistory = new MaintHistory();
+        maintScheduleHistory = new MaintHistory(mType, interval);
     }
 
     public MaintHistory getMaintScheduleHistory() {
         return maintScheduleHistory;
-    }
-
-    public String getSN() {
-        return SN;
-    }
-
-    public void setSN(String SN) {
-        this.SN = SN;
     }
 
     public Date getManufactureDate() {
@@ -58,7 +49,11 @@ public class MedicalDevice extends MedicalDeviceProduct{
     }
     
     public String toString(){
-        return super.getName();
+        return String.valueOf(deviceID);
+    }
+
+    public int getDeviceID() {
+        return deviceID;
     }
 
     

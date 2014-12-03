@@ -7,18 +7,17 @@
 package Business.Maintenance;
 
 import Business.UserAccount.UserAccount;
-import com.db4o.collections.ActivatableArrayList;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
 /**
  *
  * @author Martin
  */
-public class MaintSchedule {
+public class MaintSchedule{
     
-    private int maintInterval;
+    private final int maintInterval;
     private Date lastMaintDate;
     private Date nextMaintDate;
     private UserAccount vender;
@@ -26,8 +25,19 @@ public class MaintSchedule {
     private String fixDesp;
     private MaintType mType;
 
-    public MaintSchedule(MaintType mtype) {
+    public MaintSchedule(MaintType mtype, int interval) {
         this.mType = mtype;
+        maintInterval = interval;
+    }
+    
+    public MaintSchedule(MaintSchedule lastMaint){
+        this.maintInterval = lastMaint.getMaintInterval();
+        this.lastMaintDate = lastMaint.getLastMaintDate();
+        this.nextMaintDate = lastMaint.getNextMaintDate();
+        this.vender = lastMaint.getVender();
+        this.problemDesp = lastMaint.getProblemDesp();
+        this.fixDesp = lastMaint.getFixDesp();
+        this.mType = lastMaint.getmType();
     }
 
     public enum MaintType{
@@ -52,10 +62,6 @@ public class MaintSchedule {
         return maintInterval;
     }
 
-    public void setMaintInterval(int maintInterval) {
-        this.maintInterval = maintInterval;
-    }
-
     public Date getLastMaintDate() {
         return lastMaintDate;
     }
@@ -71,6 +77,13 @@ public class MaintSchedule {
     public void setNextMaintDate(Date nextMaintDate) {
         this.nextMaintDate = nextMaintDate;
     }
+    
+    public void setNextMaintDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(lastMaintDate);
+        calendar.add(Calendar.DATE, maintInterval);
+        nextMaintDate = calendar.getTime();
+    }
 
     public UserAccount getVender() {
         return vender;
@@ -85,7 +98,11 @@ public class MaintSchedule {
     }
 
     public void setProblemDesp(String problemDesp) {
-        this.problemDesp = problemDesp;
+        if(mType.equals(MaintType.REG)){
+            this.problemDesp = "Regular Maintenance";
+        }else{
+            this.problemDesp = problemDesp;
+        }
     }
 
     public String getFixDesp() {
@@ -93,9 +110,15 @@ public class MaintSchedule {
     }
 
     public void setFixDesp(String fixDesp) {
-        this.fixDesp = fixDesp;
+        if(mType.equals(MaintType.REG)){
+            this.fixDesp = "Regular Maintenance";
+        }else{
+            this.fixDesp = fixDesp;
+        }
     }
-    
-    
+
+    public MaintType getmType() {
+        return mType;
+    }
     
 }

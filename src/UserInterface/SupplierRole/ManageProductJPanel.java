@@ -52,6 +52,7 @@ public class ManageProductJPanel extends javax.swing.JPanel {
         addProductJButton = new javax.swing.JButton();
         delProductJButton2 = new javax.swing.JButton();
         viewProductJButton = new javax.swing.JButton();
+        refreshJButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Product Management");
@@ -79,6 +80,11 @@ public class ManageProductJPanel extends javax.swing.JPanel {
 
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
+        backJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backJButtonActionPerformed(evt);
+            }
+        });
 
         addProductJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         addProductJButton.setText("Add Product >>");
@@ -99,6 +105,13 @@ public class ManageProductJPanel extends javax.swing.JPanel {
             }
         });
 
+        refreshJButton.setText("Refresh");
+        refreshJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshJButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,16 +120,18 @@ public class ManageProductJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(backJButton)
-                                .addComponent(delProductJButton2))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(addProductJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(viewProductJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(refreshJButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(backJButton)
+                                    .addComponent(delProductJButton2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(addProductJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(viewProductJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -124,6 +139,8 @@ public class ManageProductJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
+                .addGap(12, 12, 12)
+                .addComponent(refreshJButton)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -131,13 +148,14 @@ public class ManageProductJPanel extends javax.swing.JPanel {
                     .addComponent(addProductJButton)
                     .addComponent(delProductJButton2))
                 .addGap(18, 18, 18)
-                .addComponent(viewProductJButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addComponent(backJButton)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(viewProductJButton)
+                    .addComponent(backJButton))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
     private void addProductJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductJButtonActionPerformed
         // TODO add your handling code here:
         ManageNewProductJPanel mnpjp = new ManageNewProductJPanel(userProcessContainer, supplierOrganization, userAccount);
@@ -152,7 +170,21 @@ public class ManageProductJPanel extends javax.swing.JPanel {
         if(mdp == null){
             JOptionPane.showMessageDialog(null, "Please select a product to continue!");
         }
+        ViewProductJPanel vpjp = new ViewProductJPanel(userProcessContainer, mdp);
+        userProcessContainer.add("ViewProductJPanel", vpjp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
     }//GEN-LAST:event_viewProductJButtonActionPerformed
+
+    private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
+        // TODO add your handling code here:
+        userProcessContainer.remove(this);
+        ((CardLayout)userProcessContainer.getLayout()).previous(userProcessContainer);
+    }//GEN-LAST:event_backJButtonActionPerformed
+
+    private void refreshJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshJButtonActionPerformed
+        // TODO add your handling code here:
+        populateTable();
+    }//GEN-LAST:event_refreshJButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -162,6 +194,7 @@ public class ManageProductJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable productJTable;
+    private javax.swing.JButton refreshJButton;
     private javax.swing.JButton viewProductJButton;
     // End of variables declaration//GEN-END:variables
 

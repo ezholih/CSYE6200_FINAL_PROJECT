@@ -11,11 +11,13 @@ import Business.Employee.Employee;
 import Business.EnterPrise.Enterprise;
 import Business.EnterPrise.Enterprise.EnterpriseType;
 import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.Role.HSPAdminRole;
 import Business.Role.PHSAdminRole;
-import Business.Role.SUPAdminRole;
+import Business.Role.SupplierRole;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,6 +33,7 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
     
     private JPanel userProcessContainer;
     private EcoSystem system;
+    private Network network;
     
     public ManageEnterpriseAdminJPanel(JPanel upc, EcoSystem network) {
         initComponents();
@@ -196,13 +199,25 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
         String password = txtPassword.getText();
         String name = txtName.getText();
         
+        for(UserAccount ua : enterprise.getUserAccountDirectory().getUserAccountList()){
+            if(ua.getUsername().equals(userName)){
+                JOptionPane.showMessageDialog(null, "Username already exist, please try another one.");
+                return;
+            }
+        }
+        
         Employee  employee = enterprise.getEmployeeDirectory().createEmployee(name);
         if(enterprise.getEnterpriseType().equals(EnterpriseType.PHS)){
-            UserAccount account = enterprise.getUserAccountDirectory().createUserAccount(userName, password, employee, new PHSAdminRole());
+            enterprise.getUserAccountDirectory().createUserAccount(userName, password, employee, new PHSAdminRole());
+            populateUserTable();
         }else if (enterprise.getEnterpriseType().equals(EnterpriseType.Hospital)){
             enterprise.getUserAccountDirectory().createUserAccount(userName, password, employee, new HSPAdminRole());
+            populateUserTable();
         }else if (enterprise.getEnterpriseType().equals(EnterpriseType.Supplier)){
-            enterprise.getUserAccountDirectory().createUserAccount(userName, password, employee, new SUPAdminRole());
+//            enterprise.getUserAccountDirectory().createUserAccount(userName, password, employee, new SupplierRole());
+            Organization org = enterprise.getOrganazDirectory().createOrganization(Organization.Type.Supplier);
+            org.getUserAccountDirectory().createUserAccount(userName, password, employee, new SupplierRole());
+            populateSupplierUserTable();
         }
     }//GEN-LAST:event_createJButtonActionPerformed
 
@@ -243,6 +258,26 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
                     row[2] = ua.getUsername();
 
                     model.addRow(row);
+                }
+            }
+        }
+    }
+    
+    private void populateSupplierUserTable(){
+        DefaultTableModel model = (DefaultTableModel)userJTable.getModel();
+        model.setRowCount(0);
+        
+        for(Network nw : system.getNetworkList()){
+            for(Enterprise ep : nw.getEnterpriseDirectory().getEnterpriseList()){
+                for(Organization org : ep.getOrganazDirectory().getOrganizationList()){
+                    for(UserAccount ua : org.getUserAccountDirectory().getUserAccountList()){
+                        Object[] row = new Object[3];
+                        row[0] = ep.getName();
+                        row[1] = nw.getName();
+                        row[2] = ua.getUsername();
+
+                        model.addRow(row);
+                    }
                 }
             }
         }

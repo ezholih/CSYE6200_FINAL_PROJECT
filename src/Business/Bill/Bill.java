@@ -21,6 +21,7 @@ public class Bill {
     private UserAccount billBy;
     private UserAccount billTo;
     private int accountNumber;
+    private String bankName;
     private Date billDate;
 
     public Bill(Order order) {
@@ -29,6 +30,15 @@ public class Bill {
         billDate = new Date();
     }
 
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    
     public Order getOrder() {
         return order;
     }

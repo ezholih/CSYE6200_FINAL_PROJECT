@@ -6,6 +6,7 @@
 
 package Business.MedicalDevice;
 
+import Business.Maintenance.MaintSchedule;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,5 +27,9 @@ public class MedicalDeviceInventory {
         return medicalDeviceList;
     }
     
-    
+    public MedicalDevice addDevice(MaintSchedule.MaintType mType, int interval){
+        MedicalDevice md = new MedicalDevice(mType, interval);
+        medicalDeviceList.add(md);
+        return md;
+    }
 }

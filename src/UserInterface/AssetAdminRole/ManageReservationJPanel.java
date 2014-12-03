@@ -42,7 +42,7 @@ public class ManageReservationJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Device ID", "Name", "Model", "Schedule", "Maint Date"
+                "Device ID", "Name", "Request Date", "Maint Status", "Maint Date"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -62,7 +62,7 @@ public class ManageReservationJPanel extends javax.swing.JPanel {
         backJButton.setText("<< Back");
 
         reserveJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        reserveJButton.setText("Reserve");
+        reserveJButton.setText("Approve");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -70,13 +70,15 @@ public class ManageReservationJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(reserveJButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(backJButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(reserveJButton))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)
-                        .addComponent(backJButton)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                        .addComponent(jLabel1)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,10 +88,10 @@ public class ManageReservationJPanel extends javax.swing.JPanel {
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(reserveJButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                .addComponent(backJButton)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(reserveJButton)
+                    .addComponent(backJButton))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

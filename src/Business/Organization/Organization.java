@@ -25,7 +25,6 @@ public abstract class Organization {
     
     public enum Type{
         PHSAdmin("PHS Admin Organization"), 
-        SUPAdmin("Supplier Admin Organization"), 
         HSPAdmin("Hospital Admin Organization"),
         Supplier("Supplier Organization"),
         Doctor("Doctor Organization"), 

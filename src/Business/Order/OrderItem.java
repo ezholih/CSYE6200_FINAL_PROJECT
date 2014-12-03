@@ -6,6 +6,7 @@
 
 package Business.Order;
 
+import Business.EnterPrise.SupplierEnterpise;
 import Business.MedicalDevice.MedicalDevice;
 import Business.MedicalDevice.MedicalDeviceProduct;
 
@@ -15,8 +16,20 @@ import Business.MedicalDevice.MedicalDeviceProduct;
  */
 public class OrderItem {
     
+    private static int ID = 100;
     private MedicalDeviceProduct mdProduct;
     private int quantity;
+    private SupplierEnterpise enterpise;
+
+    public OrderItem() {
+        ID = ID+1;
+    }
+
+    public int getID() {
+        return ID;
+    }
+    
+    
 
     public MedicalDeviceProduct getMdProduct() {
         return mdProduct;
@@ -26,7 +39,13 @@ public class OrderItem {
         this.mdProduct = mdProduct;
     }
     
-    
+    public SupplierEnterpise getEnterprise() {
+        return enterpise;
+    }
+
+    public void setEnterprise(SupplierEnterpise enterprise) {
+        this.enterpise = enterprise;
+    }    
 
     public int getQuantity() {
         return quantity;

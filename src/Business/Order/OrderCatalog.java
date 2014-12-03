@@ -25,4 +25,21 @@ public class OrderCatalog {
         return orderList;
     }
     
+    public Order createOrder(){
+        Order order = new Order();
+        orderList.add(order);
+        return order;
+    }
+    
+    public Order searchOrderItem(OrderItem orderItem){
+        Order od = null;
+        for(Order order : orderList){
+            for(OrderItem oi : order.getOiList())
+                if(oi.getID() == orderItem.getID()){
+                    od = order;
+                    break;
+                }
+        }
+        return od;
+    }
 }

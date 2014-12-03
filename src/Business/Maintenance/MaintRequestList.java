@@ -6,6 +6,7 @@
 
 package Business.Maintenance;
 
+import Business.MedicalDevice.MedicalDevice;
 import java.util.ArrayList;
 
 /**
@@ -13,13 +14,14 @@ import java.util.ArrayList;
  * @author Martin
  */
 public class MaintRequestList {
-    private ArrayList<MaintSchedule> maintRequestList;
+    private ArrayList<MedicalDevice> maintDevicesList;
 
     public MaintRequestList() {
-        maintRequestList = new ArrayList<>();
+        maintDevicesList = new ArrayList<>();
     }
 
-    public ArrayList<MaintSchedule> getMaintRequestList() {
-        return maintRequestList;
+    public ArrayList<MedicalDevice> getMaintDevicesList() {
+        return maintDevicesList;
     }
+
 }
