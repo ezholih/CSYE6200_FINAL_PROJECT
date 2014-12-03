@@ -6,6 +6,11 @@
 
 package UserInterface.AssetAdminRole;
 
+import Business.EcoSystem;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Martin
@@ -15,8 +20,17 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form AssetAdminWorkAreaJPanel
      */
-    public AssetAdminWorkAreaJPanel() {
+    private JPanel userProcessContainer;
+    private Organization organization;
+    private EcoSystem ecoSystem;
+    private UserAccount userAccount;
+    
+    public AssetAdminWorkAreaJPanel(JPanel upc, Organization org, EcoSystem ecosys, UserAccount ua) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.organization = org;
+        this.ecoSystem = ecosys;
+        this.userAccount = ua;
     }
 
     /**

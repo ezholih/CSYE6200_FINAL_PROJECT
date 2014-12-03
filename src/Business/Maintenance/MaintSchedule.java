@@ -120,5 +120,10 @@ public class MaintSchedule{
     public MaintType getmType() {
         return mType;
     }
+
+    public void setmType(MaintType mType) {
+        this.mType = mType;
+    }
+    
     
 }

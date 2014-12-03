@@ -6,6 +6,21 @@
 
 package UserInterface.AssetAdminRole;
 
+import Business.Maintenance.MaintSchedule;
+import Business.MedicalDevice.MedicalDevice;
+import Business.Organization.AssetMgtOrganization;
+import Business.Organization.Organization;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 /**
  *
  * @author Martin
@@ -15,8 +30,20 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ManageMaintenaceJPanel
      */
-    public ManageMaintenaceJPanel() {
+    private JPanel userProcessContainer;
+    private Organization organization;
+   
+    public ManageMaintenaceJPanel(JPanel upc, Organization org) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.organization = org;
+        txtProblemDescrption.setVisible(false);
+        problemJLabel.setVisible(false);
+        buttonGroup.add(regularJRadioButton);
+        buttonGroup.add(repairJRadioButton);
+        regularJRadioButton.setSelected(true);
+        
+        refreshMaintTable();
     }
 
     /**
@@ -28,7 +55,7 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         maintenanceJTable = new javax.swing.JTable();
@@ -37,8 +64,8 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
         regularJRadioButton = new javax.swing.JRadioButton();
         repairJRadioButton = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel2 = new javax.swing.JLabel();
+        txtProblemDescrption = new javax.swing.JTextArea();
+        problemJLabel = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Manage Maintenance");
@@ -51,11 +78,11 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Device ID", "Model", "Last Maint Date", "Next Maint Date", "Validation"
+                "Device ID", "Last Maint Date", "Next Maint Date", "Days Left", "Maint Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false
+                false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -69,17 +96,24 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
 
         maintJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         maintJButton.setText("Request Maintenance");
+        maintJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maintJButtonActionPerformed(evt);
+            }
+        });
 
         regularJRadioButton.setText("Regular");
 
         repairJRadioButton.setText("Repair");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtProblemDescrption.setColumns(20);
+        txtProblemDescrption.setRows(5);
+        txtProblemDescrption.setEnabled(false);
+        jScrollPane2.setViewportView(txtProblemDescrption);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Problem Description");
+        problemJLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        problemJLabel.setText("Problem Description");
+        problemJLabel.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -101,7 +135,7 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
                             .addGap(36, 36, 36)
                             .addComponent(repairJRadioButton))
                         .addComponent(jScrollPane2))
-                    .addComponent(jLabel2))
+                    .addComponent(problemJLabel))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -116,7 +150,7 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
                     .addComponent(regularJRadioButton)
                     .addComponent(repairJRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addComponent(problemJLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -127,18 +161,72 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void maintJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintJButtonActionPerformed
+        // TODO add your handling code here:
+        MaintSchedule.MaintType maintType = MaintSchedule.MaintType.REG;
+        int selectedRow = maintenanceJTable.getSelectedRow();
+        if(selectedRow <0){
+            JOptionPane.showMessageDialog(null, "No device is selected");
+            return;
+        }else{
+            if(repairJRadioButton.isSelected()){
+                problemJLabel.setEnabled(true);
+                txtProblemDescrption.setEnabled(true);
+                txtProblemDescrption.setVisible(false);
+                problemJLabel.setVisible(false);
+                maintType = MaintSchedule.MaintType.REP;
+            }
+            MedicalDevice md = (MedicalDevice) maintenanceJTable.getValueAt(selectedRow, 0);
+            md.setStatus("In Maintenance");
+            md.setLocation("Maintenance");
+            md.getMaintScheduleHistory().newMaintenance();
+            md.getMaintScheduleHistory().getLastMaintenace().setProblemDesp(txtProblemDescrption.getText());
+            md.getMaintScheduleHistory().getLastMaintenace().setmType(maintType);
+            ((AssetMgtOrganization) organization).getMaintRequestList().getMaintDevicesList().add(md);
+            (md.getManufacturer()).getMaintRequestList().getMaintDevicesList().add(md);
+        }
+    }//GEN-LAST:event_maintJButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backJButton;
-    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton maintJButton;
     private javax.swing.JTable maintenanceJTable;
+    private javax.swing.JLabel problemJLabel;
     private javax.swing.JRadioButton regularJRadioButton;
     private javax.swing.JRadioButton repairJRadioButton;
+    private javax.swing.JTextArea txtProblemDescrption;
     // End of variables declaration//GEN-END:variables
+
+    private void refreshMaintTable() {
+        DefaultTableModel dtm = (DefaultTableModel)maintenanceJTable.getModel();
+        dtm.setRowCount(0);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date today = new Date();
+        
+       
+        for(MedicalDevice md : ((AssetMgtOrganization)organization).getMedicalDeviceInventory().getMedicalDeviceList()){
+            Object[] row = new Object[5];
+            
+            row[0] = md;
+            row[1] = dateFormat.format(md.getMaintScheduleHistory().getLastMaintenace().getLastMaintDate());
+            row[2] = dateFormat.format(md.getMaintScheduleHistory().getLastMaintenace().getNextMaintDate());
+            if(today.after(md.getMaintScheduleHistory().getLastMaintenace().getNextMaintDate())){
+                row[3] = "Expired";
+            }else{
+                DateTime firstTime = new DateTime(md.getMaintScheduleHistory().getLastMaintenace().getNextMaintDate());
+                DateTime secondTime = new DateTime(today);
+                int days = Days.daysBetween(new LocalDate(firstTime),
+                        new LocalDate(secondTime)).getDays();
+                row[3] = days;
+            }
+            row[4] = md.getStatus();
+            
+            dtm.addRow(row);
+        }
+    }
 }

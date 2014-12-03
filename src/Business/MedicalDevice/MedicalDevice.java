@@ -21,6 +21,7 @@ public class MedicalDevice extends MedicalDeviceProduct{
     private MaintHistory maintScheduleHistory;
     private Date manufactureDate;
     private String status;
+    private String location;
 
     public MedicalDevice(MaintSchedule.MaintType mType, int interval) {
         deviceID++;
@@ -28,6 +29,14 @@ public class MedicalDevice extends MedicalDeviceProduct{
         maintScheduleHistory = new MaintHistory(mType, interval);
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    
     public MaintHistory getMaintScheduleHistory() {
         return maintScheduleHistory;
     }

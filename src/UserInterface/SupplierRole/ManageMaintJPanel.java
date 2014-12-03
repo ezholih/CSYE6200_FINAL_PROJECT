@@ -179,12 +179,13 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "No request is selected!");
             return;
         }else{
-            MaintSchedule ms = md.getMaintScheduleHistory().newMaintenance();
+            MaintSchedule ms = md.getMaintScheduleHistory().getLastMaintenace();
             ms.setLastMaintDate(new Date());
             ms.setNextMaintDate();
             if(ms.getmType().equals(MaintSchedule.MaintType.REP)){
                 ms.setFixDesp(solutionJTxtArea.getText());
             }
+            md.setStatus("Operational");
             userAccount.getMaintRequestList().getMaintDevicesList().remove(md);
             poplateRequestTable();
         }

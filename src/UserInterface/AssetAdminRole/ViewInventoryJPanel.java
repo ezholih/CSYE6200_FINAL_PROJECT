@@ -6,6 +6,13 @@
 
 package UserInterface.AssetAdminRole;
 
+import Business.MedicalDevice.MedicalDevice;
+import Business.Organization.AssetMgtOrganization;
+import Business.Organization.Organization;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Martin
@@ -15,8 +22,15 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ViewInventoryJPanel
      */
-    public ViewInventoryJPanel() {
+    private JPanel userProcessContainer;
+    private Organization organization;
+    
+    public ViewInventoryJPanel(JPanel upc, Organization org) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.organization = org;
+        
+        populateDeviceTable();
     }
 
     /**
@@ -59,6 +73,11 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
 
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
+        backJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backJButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -85,6 +104,11 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
+        userProcessContainer.remove(this);
+        ((CardLayout)userProcessContainer.getLayout()).previous(userProcessContainer);
+    }//GEN-LAST:event_backJButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backJButton;
@@ -92,4 +116,19 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    private void populateDeviceTable() {
+        DefaultTableModel dtm = (DefaultTableModel)deviceJTable.getModel();
+        dtm.setRowCount(0);
+        
+        for(MedicalDevice md : ((AssetMgtOrganization)organization).getMedicalDeviceInventory().getMedicalDeviceList()){
+            Object[] row = new Object[4];
+            row[0] = md;
+            row[1] = md.getName();
+            row[2] = md.getLocation();
+            row[3] = md.getStatus();
+            
+            dtm.addRow(row);
+        }
+    }
 }

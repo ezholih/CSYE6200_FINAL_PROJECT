@@ -261,6 +261,8 @@ public class ManageDeliveryJPanel extends javax.swing.JPanel {
         MedicalDevice md;
         for(int i = 0; i < oi.getQuantity(); i++){
             md = assetMgtOrganization.getMedicalDeviceInventory().addDevice(MaintSchedule.MaintType.REG, interval);
+            md.setStatus("Operational");
+            md.setLocation("Inventory");
             md.setManufactureDate(deliverJDateChooser.getDate());
             md.getMaintScheduleHistory().createFirstSchedule(new Date());
         }
