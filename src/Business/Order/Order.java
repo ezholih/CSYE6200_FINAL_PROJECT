@@ -18,15 +18,19 @@ import java.util.ArrayList;
 public class Order {
     
     private ArrayList<OrderItem> oiList;
-    private static int orderID = 100;
+    private static int internalID = 100;
+    private int orderID;
     private String status;
 
     public Order() {
         oiList = new ArrayList<>();
-        orderID = orderID++;
+        internalID = internalID+1;
         status = "Ordered";
     }
-    
+
+    public void setOrderID(int prefix) {
+        orderID = prefix+internalID;
+    }
     
     public int getOrderID() {
         return orderID;

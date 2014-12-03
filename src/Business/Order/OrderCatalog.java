@@ -14,10 +14,12 @@ import java.util.ArrayList;
  */
 public class OrderCatalog {
     
+    private static int orderCatID = 1000;
     private ArrayList<Order> orderList;
 
     public OrderCatalog() {
         orderList = new ArrayList<>();
+        orderCatID = orderCatID+1000;
     }
 
 
@@ -27,6 +29,7 @@ public class OrderCatalog {
     
     public Order createOrder(){
         Order order = new Order();
+        order.setOrderID(orderCatID);
         orderList.add(order);
         return order;
     }

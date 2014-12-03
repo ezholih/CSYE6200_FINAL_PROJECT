@@ -287,7 +287,7 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
 //        }
         OrderItem oi = order.createOrderItem(p, quantity);
         oi.setEnterprise(((SupplierEnterpise)jCBSupplier.getSelectedItem()));
-        refreshOrderItemTableByOrder(order);
+        refreshOrderItemTable();
     }//GEN-LAST:event_jBTAddToCartActionPerformed
 
     private void jBTViewProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTViewProductActionPerformed
