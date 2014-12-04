@@ -29,17 +29,20 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
      */
     private JPanel userProcessContainer;
     private UserAccount userAccount;
+    private ListSelectionModel cellSelectionModel;
+    private myListSelectionListener listener;
     
     public ManageMaintJPanel(JPanel upc, UserAccount ua) {
         initComponents();
         this.userProcessContainer = upc;
         this.userAccount = ua;
+        listener = new myListSelectionListener();
         
         poplateNewRequestTable();
-        maintenanceJTable.setCellSelectionEnabled(true);
-        ListSelectionModel cellSelectionModel = maintenanceJTable.getSelectionModel();
+//        maintenanceJTable.setCellSelectionEnabled(true);
+        cellSelectionModel = maintenanceJTable.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        cellSelectionModel.addListSelectionListener(new myListSelectionListener());
+        cellSelectionModel.addListSelectionListener(listener);
     }
 
     /**
@@ -50,6 +53,7 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -63,8 +67,17 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
         backJButton = new javax.swing.JButton();
         submitJButton = new javax.swing.JButton();
 
+        setLayout(new java.awt.GridBagLayout());
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Maintenance Request Management");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 12, 0, 0);
+        add(jLabel1, gridBagConstraints);
 
         maintenanceJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,23 +100,75 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(maintenanceJTable);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 425;
+        gridBagConstraints.ipady = 125;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 39);
+        add(jScrollPane1, gridBagConstraints);
+
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Problem Descrption");
         jLabel2.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 0);
+        add(jLabel2, gridBagConstraints);
 
         problemJTxtArea.setColumns(20);
         problemJTxtArea.setRows(5);
         problemJTxtArea.setEnabled(false);
         jScrollPane2.setViewportView(problemJTxtArea);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 425;
+        gridBagConstraints.ipady = 13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(7, 12, 0, 39);
+        add(jScrollPane2, gridBagConstraints);
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Solution");
         jLabel3.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(7, 12, 0, 0);
+        add(jLabel3, gridBagConstraints);
 
         solutionJTxtArea.setColumns(20);
         solutionJTxtArea.setRows(5);
         solutionJTxtArea.setEnabled(false);
         jScrollPane3.setViewportView(solutionJTxtArea);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 425;
+        gridBagConstraints.ipady = 13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(7, 12, 0, 39);
+        add(jScrollPane3, gridBagConstraints);
 
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
@@ -112,6 +177,13 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
                 backJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(22, 12, 13, 0);
+        add(backJButton, gridBagConstraints);
 
         submitJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         submitJButton.setText("Served");
@@ -120,49 +192,12 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
                 submitJButtonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jLabel2)
-                            .addComponent(jScrollPane2))
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(backJButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(submitJButton)))
-                .addContainerGap(39, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backJButton)
-                    .addComponent(submitJButton))
-                .addContainerGap())
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(22, 3, 13, 39);
+        add(submitJButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
@@ -174,22 +209,21 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
         // TODO add your handling code here:
         int selectedRow = maintenanceJTable.getSelectedRow();
-        MedicalDevice md = (MedicalDevice)maintenanceJTable.getValueAt(selectedRow, 0);
-        if(md == null){
+        if(selectedRow < 0){
             JOptionPane.showMessageDialog(null, "No request is selected!");
             return;
-        }else{
-            MaintSchedule ms = md.getMaintScheduleHistory().getLastMaintenace();
-            ms.setLastMaintDate(new Date());
-            ms.setNextMaintDate();
-            if(ms.getmType().equals(MaintSchedule.MaintType.REP)){
-                ms.setFixDesp(solutionJTxtArea.getText());
-            }
-            md.setStatus("Operational");
-            md.setLocation("Inventory");
-            userAccount.getMaintRequestList().getMaintDevicesList().remove(md);
-            poplateRequestTable();
         }
+        MedicalDevice md = (MedicalDevice)maintenanceJTable.getValueAt(selectedRow, 0);
+        MaintSchedule ms = md.getMaintScheduleHistory().getLastMaintenace();
+        ms.setLastMaintDate(new Date());
+        ms.setNextMaintDate();
+        if (ms.getmType().equals(MaintSchedule.MaintType.REP)) {
+            ms.setFixDesp(solutionJTxtArea.getText());
+        }
+        md.setStatus("Operational");
+        md.setLocation("Inventory");
+        userAccount.getMaintRequestList().getMaintDevicesList().remove(md);
+        poplateRequestTable();
     }//GEN-LAST:event_submitJButtonActionPerformed
 
 
@@ -223,7 +257,9 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
     }
     
     private void poplateRequestTable() {
+        cellSelectionModel.removeListSelectionListener(listener);
         DefaultTableModel dtm = (DefaultTableModel)maintenanceJTable.getModel();
+        dtm.setRowCount(0);
         
         for(MedicalDevice md : userAccount.getMaintRequestList().getMaintDevicesList()){
             Object[] row = new Object[4];
@@ -234,6 +270,7 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
             
             dtm.addRow(row);
         }
+        cellSelectionModel.addListSelectionListener(listener);
     }
     
     class myListSelectionListener implements ListSelectionListener{

@@ -47,14 +47,23 @@ public class TeamLeaderWorkAreaJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
         teamMgnJButton = new javax.swing.JButton();
         surgeryMgnJButton = new javax.swing.JButton();
         surgeryMgnJButton1 = new javax.swing.JButton();
 
+        setLayout(new java.awt.GridBagLayout());
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Team Leader Work Area");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 12, 0, 0);
+        add(jLabel1, gridBagConstraints);
 
         teamMgnJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         teamMgnJButton.setText("Manage Team Member >>");
@@ -63,6 +72,14 @@ public class TeamLeaderWorkAreaJPanel extends javax.swing.JPanel {
                 teamMgnJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(81, 105, 0, 108);
+        add(teamMgnJButton, gridBagConstraints);
 
         surgeryMgnJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         surgeryMgnJButton.setText("Manage Surgery Schedule>>");
@@ -71,6 +88,13 @@ public class TeamLeaderWorkAreaJPanel extends javax.swing.JPanel {
                 surgeryMgnJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(34, 105, 0, 108);
+        add(surgeryMgnJButton, gridBagConstraints);
 
         surgeryMgnJButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         surgeryMgnJButton1.setText("View Surgery Schedul >>");
@@ -79,37 +103,14 @@ public class TeamLeaderWorkAreaJPanel extends javax.swing.JPanel {
                 surgeryMgnJButton1ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(surgeryMgnJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(teamMgnJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(surgeryMgnJButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(108, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(81, 81, 81)
-                .addComponent(teamMgnJButton)
-                .addGap(34, 34, 34)
-                .addComponent(surgeryMgnJButton)
-                .addGap(40, 40, 40)
-                .addComponent(surgeryMgnJButton1)
-                .addContainerGap(112, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 26;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(40, 105, 112, 108);
+        add(surgeryMgnJButton1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void teamMgnJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamMgnJButtonActionPerformed

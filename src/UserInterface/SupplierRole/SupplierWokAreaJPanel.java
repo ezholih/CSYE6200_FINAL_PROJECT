@@ -51,14 +51,23 @@ public class SupplierWokAreaJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
         mgnProductJButton = new javax.swing.JButton();
         mgnMaintJButton = new javax.swing.JButton();
         mgnOrderJButton = new javax.swing.JButton();
 
+        setLayout(new java.awt.GridBagLayout());
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Supplier Work Area");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 12, 0, 0);
+        add(jLabel1, gridBagConstraints);
 
         mgnProductJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         mgnProductJButton.setText("Product Management >>");
@@ -67,6 +76,13 @@ public class SupplierWokAreaJPanel extends javax.swing.JPanel {
                 mgnProductJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(51, 118, 0, 189);
+        add(mgnProductJButton, gridBagConstraints);
 
         mgnMaintJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         mgnMaintJButton.setText("Maintenance Service >>");
@@ -75,6 +91,13 @@ public class SupplierWokAreaJPanel extends javax.swing.JPanel {
                 mgnMaintJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(32, 118, 151, 0);
+        add(mgnMaintJButton, gridBagConstraints);
 
         mgnOrderJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         mgnOrderJButton.setText("Order Management >>");
@@ -83,37 +106,13 @@ public class SupplierWokAreaJPanel extends javax.swing.JPanel {
                 mgnOrderJButtonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mgnProductJButton)
-                            .addComponent(mgnOrderJButton)
-                            .addComponent(mgnMaintJButton))))
-                .addContainerGap(189, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(51, 51, 51)
-                .addComponent(mgnProductJButton)
-                .addGap(31, 31, 31)
-                .addComponent(mgnOrderJButton)
-                .addGap(32, 32, 32)
-                .addComponent(mgnMaintJButton)
-                .addContainerGap(151, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(31, 118, 0, 0);
+        add(mgnOrderJButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mgnProductJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mgnProductJButtonActionPerformed

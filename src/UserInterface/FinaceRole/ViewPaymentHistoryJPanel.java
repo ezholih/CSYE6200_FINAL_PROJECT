@@ -6,6 +6,15 @@
 
 package UserInterface.FinaceRole;
 
+import Business.EnterPrise.Enterprise;
+import Business.Network.Network;
+import Business.Organization.FinanceOrganization;
+import Business.Organization.Organization;
+import Business.Payment.Payment;
+import java.text.SimpleDateFormat;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Martin
@@ -15,8 +24,16 @@ public class ViewPaymentHistoryJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ViewPaymentHistoryJPanel
      */
-    public ViewPaymentHistoryJPanel() {
+    private JPanel userProcessContainer;
+    private Organization financeOrganization;
+    private Network network;
+    public ViewPaymentHistoryJPanel(JPanel upc, Organization org, Network nw) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.financeOrganization = org;
+        this.network = nw;
+        
+        populatePaymentHistoryTable();
     }
 
     /**
@@ -27,16 +44,26 @@ public class ViewPaymentHistoryJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        paymentHistoryJTable = new javax.swing.JTable();
         backJButton = new javax.swing.JButton();
+
+        setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("View Payment History");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 12, 0, 0);
+        add(jLabel1, gridBagConstraints);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        paymentHistoryJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -55,34 +82,29 @@ public class ViewPaymentHistoryJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(paymentHistoryJTable);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 546;
+        gridBagConstraints.ipady = 204;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 17);
+        add(jScrollPane1, gridBagConstraints);
 
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(backJButton))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                .addComponent(backJButton)
-                .addContainerGap())
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(30, 12, 54, 0);
+        add(backJButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -90,6 +112,24 @@ public class ViewPaymentHistoryJPanel extends javax.swing.JPanel {
     private javax.swing.JButton backJButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable paymentHistoryJTable;
     // End of variables declaration//GEN-END:variables
+
+    private void populatePaymentHistoryTable() {
+        DefaultTableModel dtm = (DefaultTableModel)paymentHistoryJTable.getModel();
+        dtm.setRowCount(0);
+        
+        for(Payment pay : ((FinanceOrganization)financeOrganization).getPaymentDirectory().getPaymentList()){
+            SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+            Object[] row = new Object[5];
+            row[0] = pay;
+            row[1] = pay.getBill().getAmount();
+            row[2] = pay.getBill().getBillBy().getEmployee().getName();
+            Enterprise ep = network.getEnterpriseDirectory().getEnterpriseByUserAccount(pay.getBill().getBillBy());
+            row[3] = ep.toString();
+            row[4] = fmt.format(pay.getPaymentDate());
+
+            dtm.addRow(row);
+        }
+    }
 }

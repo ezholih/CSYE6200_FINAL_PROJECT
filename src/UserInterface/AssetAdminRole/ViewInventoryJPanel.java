@@ -7,11 +7,13 @@
 package UserInterface.AssetAdminRole;
 
 import Business.MedicalDevice.MedicalDevice;
+import Business.Network.Network;
 import Business.Organization.AssetMgtOrganization;
 import Business.Organization.Organization;
 import java.awt.CardLayout;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,12 +28,14 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
      */
     private JPanel userProcessContainer;
     private Organization organization;
+    private Network network;
     private String date; 
    
-    public ViewInventoryJPanel(JPanel upc, Organization org) {
+    public ViewInventoryJPanel(JPanel upc, Organization org, Network nw) {
         initComponents();
         this.userProcessContainer = upc;
         this.organization = org;
+        this.network = nw;
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         date = format.format(new Date());
         
@@ -46,14 +50,25 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         deviceJTable = new javax.swing.JTable();
         backJButton = new javax.swing.JButton();
+        viewHistoryJButton = new javax.swing.JButton();
+
+        setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("View Inventory");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 12, 0, 0);
+        add(jLabel1, gridBagConstraints);
 
         deviceJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,6 +91,19 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(deviceJTable);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 425;
+        gridBagConstraints.ipady = 150;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 35);
+        add(jScrollPane1, gridBagConstraints);
+
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -83,30 +111,26 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
                 backJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(45, 12, 44, 0);
+        add(backJButton, gridBagConstraints);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(backJButton))
-                .addContainerGap(35, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(backJButton)
-                .addContainerGap(44, Short.MAX_VALUE))
-        );
+        viewHistoryJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        viewHistoryJButton.setText("Maintenance History >>");
+        viewHistoryJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewHistoryJButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(45, 113, 44, 35);
+        add(viewHistoryJButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
@@ -114,12 +138,27 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
         ((CardLayout)userProcessContainer.getLayout()).previous(userProcessContainer);
     }//GEN-LAST:event_backJButtonActionPerformed
 
+    private void viewHistoryJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewHistoryJButtonActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = deviceJTable.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "No product is selected!");
+            return;
+        }
+        
+        MedicalDevice md = (MedicalDevice)deviceJTable.getValueAt(selectedRow, 0);
+        ViewMaintHistoryJPanel jp = new ViewMaintHistoryJPanel(userProcessContainer, md, network);
+        userProcessContainer.add("ViewMaintHistoryJPanel", jp);
+         ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
+    }//GEN-LAST:event_viewHistoryJButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backJButton;
     private javax.swing.JTable deviceJTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton viewHistoryJButton;
     // End of variables declaration//GEN-END:variables
 
     private void populateDeviceTable() {

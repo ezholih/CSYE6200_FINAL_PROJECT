@@ -10,7 +10,9 @@ import Business.Organization.AssetMgtOrganization;
 import Business.Organization.Organization;
 import Business.Surgery.SurgeryRequest;
 import Business.SurgeryRoom.SurgeryRoom;
+import java.awt.CardLayout;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -26,7 +28,7 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
      */
     private JPanel userProcessContainer;
     private Organization organization;
-    
+    private String szDecision;
     
     public ManageRequestJPanel(JPanel upc, Organization org) {
         initComponents();
@@ -45,11 +47,14 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         requestJTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         backJButton = new javax.swing.JButton();
-        reserveJButton = new javax.swing.JButton();
+        decisioinJButton = new javax.swing.JButton();
+        approveJRadioButton = new javax.swing.JRadioButton();
+        rejectJRadioButton = new javax.swing.JRadioButton();
 
         requestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,12 +82,31 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
 
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
-
-        reserveJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        reserveJButton.setText("Approve");
-        reserveJButton.addActionListener(new java.awt.event.ActionListener() {
+        backJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reserveJButtonActionPerformed(evt);
+                backJButtonActionPerformed(evt);
+            }
+        });
+
+        decisioinJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        decisioinJButton.setText("Decision");
+        decisioinJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decisioinJButtonActionPerformed(evt);
+            }
+        });
+
+        approveJRadioButton.setText("Approve");
+        approveJRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                approveJRadioButtonActionPerformed(evt);
+            }
+        });
+
+        rejectJRadioButton.setText("Reject");
+        rejectJRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rejectJRadioButtonActionPerformed(evt);
             }
         });
 
@@ -91,33 +115,37 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(backJButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(reserveJButton))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(backJButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(approveJRadioButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(rejectJRadioButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(decisioinJButton))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(13, 13, 13)
                 .addComponent(jLabel1)
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(reserveJButton)
-                    .addComponent(backJButton))
-                .addContainerGap(152, Short.MAX_VALUE))
+                    .addComponent(backJButton)
+                    .addComponent(approveJRadioButton)
+                    .addComponent(rejectJRadioButton)
+                    .addComponent(decisioinJButton)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void reserveJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveJButtonActionPerformed
+    private void decisioinJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decisioinJButtonActionPerformed
         // TODO add your handling code here:
         int selectedRow = requestJTable.getSelectedRow();
         if(selectedRow <0){
@@ -126,18 +154,45 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
         }
         
         SurgeryRequest request = (SurgeryRequest)requestJTable.getValueAt(selectedRow, 0);
-        request.setStatus("Approved");
-        SurgeryRoom room = request.getSurgeryRoom();
-        room.getSgyScheduleDirectory().getSurgeryScheduleList().add(request.getSurgerySchedule());
-    }//GEN-LAST:event_reserveJButtonActionPerformed
+        Date lastMaintDate = request.getSurgerySchedule().getMedicalDevice().getMaintScheduleHistory().getLastMaintenace().getLastMaintDate();
+        if(request.getSurgerySchedule().getDate().after(lastMaintDate)){
+            JOptionPane.showMessageDialog(null, "Request date is after equipment next maintenance date! You can't approve this request!");
+             request.setStatus("Rejected");
+            return;
+        }
+        request.setStatus(szDecision);
+        if(szDecision.equals("Approved")){
+            SurgeryRoom room = request.getSurgeryRoom();
+            room.getSgyScheduleDirectory().getSurgeryScheduleList().add(request.getSurgerySchedule());
+        }
+    }//GEN-LAST:event_decisioinJButtonActionPerformed
+
+    private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+    }//GEN-LAST:event_backJButtonActionPerformed
+
+    private void approveJRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveJRadioButtonActionPerformed
+        // TODO add your handling code here:
+        szDecision = "Approved";
+    }//GEN-LAST:event_approveJRadioButtonActionPerformed
+
+    private void rejectJRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectJRadioButtonActionPerformed
+        // TODO add your handling code here:
+        szDecision = "Rejected";
+    }//GEN-LAST:event_rejectJRadioButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton approveJRadioButton;
     private javax.swing.JButton backJButton;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton decisioinJButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rejectJRadioButton;
     private javax.swing.JTable requestJTable;
-    private javax.swing.JButton reserveJButton;
     // End of variables declaration//GEN-END:variables
 
     private void populateRequestTable() {

@@ -56,6 +56,7 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
@@ -71,11 +72,32 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
         transferJRadioButton = new javax.swing.JRadioButton();
         viewOrderJButton = new javax.swing.JButton();
 
+        setLayout(new java.awt.GridBagLayout());
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Manage Payment");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 12, 0, 0);
+        add(jLabel1, gridBagConstraints);
 
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
+        backJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backJButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 12, 35, 0);
+        add(backJButton, gridBagConstraints);
 
         paymentJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -98,6 +120,19 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(paymentJTable);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 15;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 425;
+        gridBagConstraints.ipady = 137;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 27);
+        add(jScrollPane1, gridBagConstraints);
+
         makePaymentJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         makePaymentJButton.setText("Commit Payment");
         makePaymentJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -105,10 +140,23 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
                 makePaymentJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 13;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 11, 35, 27);
+        add(makePaymentJButton, gridBagConstraints);
 
         accountJLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         accountJLabel.setText("Account");
         accountJLabel.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(21, 18, 0, 0);
+        add(accountJLabel, gridBagConstraints);
 
         cashJRadioButton.setText("Cash");
         cashJRadioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -116,11 +164,33 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
                 cashJRadioButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 0);
+        add(cashJRadioButton, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Payment Type");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(14, 12, 0, 0);
+        add(jLabel2, gridBagConstraints);
 
         txtAccount.setEditable(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 13;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 81;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(19, 18, 0, 0);
+        add(txtAccount, gridBagConstraints);
 
         checkJRadioButton.setText("Check");
         checkJRadioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -128,6 +198,14 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
                 checkJRadioButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 0);
+        add(checkJRadioButton, gridBagConstraints);
 
         transferJRadioButton.setText("Transfer");
         transferJRadioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -135,6 +213,14 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
                 transferJRadioButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 0);
+        add(transferJRadioButton, gridBagConstraints);
 
         viewOrderJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         viewOrderJButton.setText("View Order Detail >>");
@@ -143,63 +229,14 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
                 viewOrderJButtonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(backJButton)
-                        .addGap(228, 228, 228)
-                        .addComponent(makePaymentJButton))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(cashJRadioButton)
-                            .addGap(18, 18, 18)
-                            .addComponent(checkJRadioButton)
-                            .addGap(18, 18, 18)
-                            .addComponent(transferJRadioButton)
-                            .addGap(18, 18, 18)
-                            .addComponent(accountJLabel)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(viewOrderJButton))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(viewOrderJButton)
-                        .addComponent(jLabel2)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cashJRadioButton)
-                    .addComponent(checkJRadioButton)
-                    .addComponent(transferJRadioButton)
-                    .addComponent(txtAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accountJLabel))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backJButton)
-                    .addComponent(makePaymentJButton))
-                .addContainerGap(42, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 60, 0, 27);
+        add(viewOrderJButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void checkJRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkJRadioButtonActionPerformed
@@ -237,11 +274,15 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "No bill is selected");
             return;
         }   
-        try{
-            account = Integer.parseInt(txtAccount.getText());
-        }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "Bank account number can only be numbers.");
-            return;
+        if(paymentType.equals("Transfer")){
+            try{
+                account = Integer.parseInt(txtAccount.getText());
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Bank account number can only be numbers.");
+                return;
+            }
+        }else{
+            account = 00000000;
         }
         Bill bill = (Bill)paymentJTable.getValueAt(selectedRow, 0);
         Payment payment = ((FinanceOrganization)organization).getPaymentDirectory().createPayment(bill);
@@ -255,6 +296,12 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         paymentType = "Cash";
     }//GEN-LAST:event_cashJRadioButtonActionPerformed
+
+    private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+    }//GEN-LAST:event_backJButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -278,15 +325,19 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
         dtm.setRowCount(0);
         
         for(Bill bill : ((FinanceOrganization)organization).getBillDirectory().getBillList()){
-            Object[] row = new Object[5];
-            row[0] = bill;
-            row[1] = bill.getAmount();
-            row[2] = bill.getBillBy().getEmployee().getName();
-            Enterprise ep = network.getEnterpriseDirectory().getEnterpriseByUserAccount(bill.getBillBy());
-            row[3] = ep.toString();
-            row[4] = bill.getAccountNumber();
-            
-            dtm.addRow(row);
+            for(Payment pay : ((FinanceOrganization)organization).getPaymentDirectory().getPaymentList()){
+                if(!(pay.getBill().equals(bill))){
+                    Object[] row = new Object[5];
+                    row[0] = bill;
+                    row[1] = bill.getAmount();
+                    row[2] = bill.getBillBy().getEmployee().getName();
+                    Enterprise ep = network.getEnterpriseDirectory().getEnterpriseByUserAccount(bill.getBillBy());
+                    row[3] = ep.toString();
+                    row[4] = bill.getAccountNumber();
+
+                    dtm.addRow(row);
+                }
+            }
         }
     }
 }

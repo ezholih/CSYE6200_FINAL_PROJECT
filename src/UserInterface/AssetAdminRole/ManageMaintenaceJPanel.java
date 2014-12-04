@@ -10,6 +10,7 @@ import Business.Maintenance.MaintSchedule;
 import Business.MedicalDevice.MedicalDevice;
 import Business.Organization.AssetMgtOrganization;
 import Business.Organization.Organization;
+import java.awt.CardLayout;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -32,6 +33,7 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
      */
     private JPanel userProcessContainer;
     private Organization organization;
+    private MaintSchedule.MaintType maintType;
    
     public ManageMaintenaceJPanel(JPanel upc, Organization org) {
         initComponents();
@@ -42,6 +44,7 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
         buttonGroup.add(regularJRadioButton);
         buttonGroup.add(repairJRadioButton);
         regularJRadioButton.setSelected(true);
+        maintType = MaintSchedule.MaintType.REG;
         
         refreshMaintTable();
     }
@@ -54,6 +57,7 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
@@ -67,8 +71,17 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
         txtProblemDescrption = new javax.swing.JTextArea();
         problemJLabel = new javax.swing.JLabel();
 
+        setLayout(new java.awt.GridBagLayout());
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Manage Maintenance");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 12, 0, 0);
+        add(jLabel1, gridBagConstraints);
 
         maintenanceJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,8 +104,32 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(maintenanceJTable);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 425;
+        gridBagConstraints.ipady = 112;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 33);
+        add(jScrollPane1, gridBagConstraints);
+
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
+        backJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backJButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 12, 13, 0);
+        add(backJButton, gridBagConstraints);
 
         maintJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         maintJButton.setText("Request Maintenance");
@@ -101,91 +138,117 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
                 maintJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 63, 13, 33);
+        add(maintJButton, gridBagConstraints);
 
         regularJRadioButton.setText("Regular");
+        regularJRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                regularJRadioButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 36, 0, 0);
+        add(regularJRadioButton, gridBagConstraints);
 
         repairJRadioButton.setText("Repair");
+        repairJRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                repairJRadioButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 4, 0, 0);
+        add(repairJRadioButton, gridBagConstraints);
 
         txtProblemDescrption.setColumns(20);
         txtProblemDescrption.setRows(5);
         txtProblemDescrption.setEnabled(false);
         jScrollPane2.setViewportView(txtProblemDescrption);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 425;
+        gridBagConstraints.ipady = 47;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(7, 12, 0, 33);
+        add(jScrollPane2, gridBagConstraints);
+
         problemJLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         problemJLabel.setText("Problem Description");
         problemJLabel.setEnabled(false);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(backJButton)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(maintJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(121, 121, 121)
-                            .addComponent(regularJRadioButton)
-                            .addGap(36, 36, 36)
-                            .addComponent(repairJRadioButton))
-                        .addComponent(jScrollPane2))
-                    .addComponent(problemJLabel))
-                .addContainerGap(33, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(regularJRadioButton)
-                    .addComponent(repairJRadioButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(problemJLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backJButton)
-                    .addComponent(maintJButton))
-                .addContainerGap())
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 12, 0, 0);
+        add(problemJLabel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void maintJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintJButtonActionPerformed
         // TODO add your handling code here:
-        MaintSchedule.MaintType maintType = MaintSchedule.MaintType.REG;
         int selectedRow = maintenanceJTable.getSelectedRow();
         if(selectedRow <0){
             JOptionPane.showMessageDialog(null, "No device is selected");
             return;
         }else{
-            if(repairJRadioButton.isSelected()){
-                problemJLabel.setEnabled(true);
-                txtProblemDescrption.setEnabled(true);
-                txtProblemDescrption.setVisible(false);
-                problemJLabel.setVisible(false);
-                maintType = MaintSchedule.MaintType.REP;
-            }
             MedicalDevice md = (MedicalDevice) maintenanceJTable.getValueAt(selectedRow, 0);
+            if(md.getStatus().equals("In Maintenance")){
+                JOptionPane.showMessageDialog(null, "This equipment has not returned from maintenance!");
+                return;
+            }
             md.setStatus("In Maintenance");
             md.setLocation("Maintenance");
             md.getMaintScheduleHistory().newMaintenance();
-            md.getMaintScheduleHistory().getLastMaintenace().setProblemDesp(txtProblemDescrption.getText());
+            md.getMaintScheduleHistory().getLastMaintenace().setVender(md.getManufacturer());
             md.getMaintScheduleHistory().getLastMaintenace().setmType(maintType);
+            md.getMaintScheduleHistory().getLastMaintenace().setProblemDesp(txtProblemDescrption.getText());
             ((AssetMgtOrganization) organization).getMaintRequestList().getMaintDevicesList().add(md);
             (md.getManufacturer()).getMaintRequestList().getMaintDevicesList().add(md);
         }
     }//GEN-LAST:event_maintJButtonActionPerformed
+
+    private void repairJRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repairJRadioButtonActionPerformed
+        // TODO add your handling code here:
+        problemJLabel.setEnabled(true);
+        txtProblemDescrption.setEnabled(true);
+        txtProblemDescrption.setVisible(true);
+        problemJLabel.setVisible(true);
+        maintType = MaintSchedule.MaintType.REP;        
+    }//GEN-LAST:event_repairJRadioButtonActionPerformed
+
+    private void regularJRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regularJRadioButtonActionPerformed
+        // TODO add your handling code here:
+        problemJLabel.setEnabled(false);
+        txtProblemDescrption.setEnabled(false);
+        txtProblemDescrption.setVisible(false);
+        problemJLabel.setVisible(false);
+        maintType = MaintSchedule.MaintType.REG;   
+    }//GEN-LAST:event_regularJRadioButtonActionPerformed
+
+    private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+    }//GEN-LAST:event_backJButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -46,14 +46,23 @@ public class AccountingWorkAreaJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         paymentMgnJButton = new javax.swing.JButton();
         paymentViewJButton = new javax.swing.JButton();
 
+        setLayout(new java.awt.GridBagLayout());
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Accounting Work Area");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 12, 0, 0);
+        add(jLabel1, gridBagConstraints);
 
         paymentMgnJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         paymentMgnJButton.setText("Manage Payment >>");
@@ -62,37 +71,29 @@ public class AccountingWorkAreaJPanel extends javax.swing.JPanel {
                 paymentMgnJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 38;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(60, 123, 0, 130);
+        add(paymentMgnJButton, gridBagConstraints);
 
         paymentViewJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         paymentViewJButton.setText("View Payment History >>");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(paymentViewJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(paymentMgnJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(130, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(60, 60, 60)
-                .addComponent(paymentMgnJButton)
-                .addGap(18, 18, 18)
-                .addComponent(paymentViewJButton)
-                .addContainerGap(183, Short.MAX_VALUE))
-        );
+        paymentViewJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paymentViewJButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 123, 183, 130);
+        add(paymentViewJButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void paymentMgnJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentMgnJButtonActionPerformed
@@ -101,6 +102,13 @@ public class AccountingWorkAreaJPanel extends javax.swing.JPanel {
         userProcessContainer.add("ManageProductJPanel", jp);
         ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);       
     }//GEN-LAST:event_paymentMgnJButtonActionPerformed
+
+    private void paymentViewJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentViewJButtonActionPerformed
+        // TODO add your handling code here:
+        ViewPaymentHistoryJPanel jp = new ViewPaymentHistoryJPanel(userProcessContainer, organization, network);
+        userProcessContainer.add("ViewPaymentHistoryJPanel", jp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);         
+    }//GEN-LAST:event_paymentViewJButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

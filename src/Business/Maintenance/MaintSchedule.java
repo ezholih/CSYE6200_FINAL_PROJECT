@@ -7,6 +7,7 @@
 package Business.Maintenance;
 
 import Business.UserAccount.UserAccount;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -125,5 +126,8 @@ public class MaintSchedule{
         this.mType = mType;
     }
     
-    
+    public String toString(){
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(lastMaintDate);
+    }
 }

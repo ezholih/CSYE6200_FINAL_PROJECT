@@ -45,6 +45,7 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
         newDeviceJButton = new javax.swing.JButton();
@@ -52,8 +53,16 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
         maintenaceJButton = new javax.swing.JButton();
         viewDeviceJButton = new javax.swing.JButton();
 
+        setLayout(new java.awt.GridBagLayout());
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Asset Admin Work Area");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 12, 0, 0);
+        add(jLabel1, gridBagConstraints);
 
         newDeviceJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         newDeviceJButton.setText("Device Purchase Management >>");
@@ -62,6 +71,14 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
                 newDeviceJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 28;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(69, 93, 0, 92);
+        add(newDeviceJButton, gridBagConstraints);
 
         reservationJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         reservationJButton.setText("Surgery Request Management >>");
@@ -70,6 +87,14 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
                 reservationJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 26;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(43, 93, 0, 92);
+        add(reservationJButton, gridBagConstraints);
 
         maintenaceJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         maintenaceJButton.setText("Device Maintenance Management >>");
@@ -78,6 +103,13 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
                 maintenaceJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(44, 93, 0, 92);
+        add(maintenaceJButton, gridBagConstraints);
 
         viewDeviceJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         viewDeviceJButton.setText("View Inventory >>");
@@ -86,40 +118,14 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
                 viewDeviceJButtonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(maintenaceJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(newDeviceJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(reservationJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(viewDeviceJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(92, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(69, 69, 69)
-                .addComponent(newDeviceJButton)
-                .addGap(43, 43, 43)
-                .addComponent(reservationJButton)
-                .addGap(44, 44, 44)
-                .addComponent(maintenaceJButton)
-                .addGap(41, 41, 41)
-                .addComponent(viewDeviceJButton)
-                .addContainerGap(75, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 144;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(41, 93, 75, 92);
+        add(viewDeviceJButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void newDeviceJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDeviceJButtonActionPerformed
@@ -145,7 +151,7 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void viewDeviceJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewDeviceJButtonActionPerformed
         // TODO add your handling code here:
-        ViewInventoryJPanel mrjp = new ViewInventoryJPanel(userProcessContainer, organization);
+        ViewInventoryJPanel mrjp = new ViewInventoryJPanel(userProcessContainer, organization, network);
         userProcessContainer.add("ViewInventoryJPanel",mrjp);
         ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);      
     }//GEN-LAST:event_viewDeviceJButtonActionPerformed
