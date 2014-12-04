@@ -48,9 +48,9 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
         this.network = nw;
         this.finaceOrganization = getFinaceOrganization();
         this.userAccount = ua;
+        deliverJButton1.setEnabled(false);
         populateOrderTable();
         populateOrderItemTable(new Order());
-        orderJTable.setCellSelectionEnabled(true);
         ListSelectionModel cellSelectionModel = orderJTable.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         cellSelectionModel.addListSelectionListener(new myListSelectionListener());
@@ -427,6 +427,11 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
         public void valueChanged(ListSelectionEvent e) {
             int selectedRow = orderJTable.getSelectedRow();
             Order od = (Order)orderJTable.getValueAt(selectedRow, 0);
+            if(orderJTable.getValueAt(selectedRow, 2).equals("Payed")){
+                deliverJButton1.setEnabled(true);
+            }else{
+                deliverJButton1.setEnabled(false);
+            }
             populateOrderItemTable(od);
         }
     }

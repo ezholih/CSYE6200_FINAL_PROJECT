@@ -316,6 +316,14 @@ public class ManageDeliveryJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Invalid input value for maintenance interval!");
             return;
         }
+        if(interval < 0){
+            JOptionPane.showMessageDialog(null, "Maintenance Interval must >=0!");
+            return;
+        }
+        if (deliverJDateChooser.getDate().after(new Date())) {
+            JOptionPane.showMessageDialog(null, "Invalid Input!Manufacture is after today's date!");
+            return;
+        }
         OrderItem oi = (OrderItem)orderItemJComboBox.getSelectedItem();
         MedicalDevice md;
         for(int i = 0; i < oi.getQuantity(); i++){

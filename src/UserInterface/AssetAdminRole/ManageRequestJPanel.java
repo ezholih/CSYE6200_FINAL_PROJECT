@@ -34,6 +34,8 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
         initComponents();
         this.userProcessContainer = upc;
         this.organization = org;
+        buttonGroup.add(approveJRadioButton);
+        buttonGroup.add(rejectJRadioButton);
         
         populateRequestTable();
     }
@@ -46,8 +48,9 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         requestJTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -55,6 +58,8 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
         decisioinJButton = new javax.swing.JButton();
         approveJRadioButton = new javax.swing.JRadioButton();
         rejectJRadioButton = new javax.swing.JRadioButton();
+
+        setLayout(new java.awt.GridBagLayout());
 
         requestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,8 +82,28 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(requestJTable);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 425;
+        gridBagConstraints.ipady = 119;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(28, 12, 0, 39);
+        add(jScrollPane1, gridBagConstraints);
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Manage Reservation");
+        jLabel1.setText("Manage Request");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(13, 12, 0, 0);
+        add(jLabel1, gridBagConstraints);
 
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
@@ -87,6 +112,12 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
                 backJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 0);
+        add(backJButton, gridBagConstraints);
 
         decisioinJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         decisioinJButton.setText("Decision");
@@ -95,6 +126,12 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
                 decisioinJButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 39);
+        add(decisioinJButton, gridBagConstraints);
 
         approveJRadioButton.setText("Approve");
         approveJRadioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -102,6 +139,14 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
                 approveJRadioButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(19, 108, 151, 0);
+        add(approveJRadioButton, gridBagConstraints);
 
         rejectJRadioButton.setText("Reject");
         rejectJRadioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -109,40 +154,13 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
                 rejectJRadioButtonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(backJButton)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(approveJRadioButton)
-                            .addGap(18, 18, 18)
-                            .addComponent(rejectJRadioButton)
-                            .addGap(18, 18, 18)
-                            .addComponent(decisioinJButton))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addComponent(jLabel1)
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backJButton)
-                    .addComponent(approveJRadioButton)
-                    .addComponent(rejectJRadioButton)
-                    .addComponent(decisioinJButton)))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(19, 18, 151, 0);
+        add(rejectJRadioButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void decisioinJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decisioinJButtonActionPerformed
@@ -154,13 +172,13 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
         }
         
         SurgeryRequest request = (SurgeryRequest)requestJTable.getValueAt(selectedRow, 0);
-        Date lastMaintDate = request.getSurgerySchedule().getMedicalDevice().getMaintScheduleHistory().getLastMaintenace().getLastMaintDate();
-        if(request.getSurgerySchedule().getDate().after(lastMaintDate)){
+        Date nextMaintDate = request.getSurgerySchedule().getMedicalDevice().getMaintScheduleHistory().getLastMaintenace().getNextMaintDate();        
+        request.setStatus(szDecision);
+        if(request.getSurgerySchedule().getDate().after(nextMaintDate)){
             JOptionPane.showMessageDialog(null, "Request date is after equipment next maintenance date! You can't approve this request!");
              request.setStatus("Rejected");
-            return;
         }
-        request.setStatus(szDecision);
+
         if(szDecision.equals("Approved")){
             SurgeryRoom room = request.getSurgeryRoom();
             room.getSgyScheduleDirectory().getSurgeryScheduleList().add(request.getSurgerySchedule());
@@ -187,7 +205,7 @@ public class ManageRequestJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton approveJRadioButton;
     private javax.swing.JButton backJButton;
-    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JButton decisioinJButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

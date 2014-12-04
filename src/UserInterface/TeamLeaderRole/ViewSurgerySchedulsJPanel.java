@@ -109,6 +109,11 @@ public class ViewSurgerySchedulsJPanel extends javax.swing.JPanel {
 
         BackJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         BackJButton.setText("<< Back");
+        BackJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackJButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -144,6 +149,11 @@ public class ViewSurgerySchedulsJPanel extends javax.swing.JPanel {
         userProcessContainer.add("ManageSurgeryJPanel", jp);
         ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);                
     }//GEN-LAST:event_viewDetailJButtonActionPerformed
+
+    private void BackJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackJButtonActionPerformed
+        userProcessContainer.remove(this);
+        ((CardLayout)userProcessContainer.getLayout()).previous(userProcessContainer);        // TODO add your handling code here:
+    }//GEN-LAST:event_BackJButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -11,6 +11,7 @@ import Business.Network.Network;
 import Business.Organization.FinanceOrganization;
 import Business.Organization.Organization;
 import Business.Payment.Payment;
+import java.awt.CardLayout;
 import java.text.SimpleDateFormat;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -99,6 +100,11 @@ public class ViewPaymentHistoryJPanel extends javax.swing.JPanel {
 
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
+        backJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backJButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -106,6 +112,11 @@ public class ViewPaymentHistoryJPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(30, 12, 54, 0);
         add(backJButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
+        userProcessContainer.remove(this);
+        ((CardLayout)userProcessContainer.getLayout()).previous(userProcessContainer);        // TODO add your handling code here:
+    }//GEN-LAST:event_backJButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

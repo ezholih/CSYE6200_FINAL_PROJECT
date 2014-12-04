@@ -69,7 +69,7 @@ public class Order {
     public double getTotalPrice(){
         double total = 0;
         for(OrderItem oi : this.oiList){
-            total = oi.getQuantity()*oi.getMdProduct().getPrice();
+            total = total+oi.getQuantity()*oi.getMdProduct().getPrice();
         }
         return total;
     }

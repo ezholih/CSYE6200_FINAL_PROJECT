@@ -80,17 +80,17 @@ public class ManageTeamJPanel extends javax.swing.JPanel {
 
         teamJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Employee ID", "Name", "Title"
+                "User Name", "Employee ID", "Name", "Title"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -252,10 +252,11 @@ public class ManageTeamJPanel extends javax.swing.JPanel {
             if (team.getTeamLeader().equals(userAccount)) {
                 myTeam = team;
                 for (UserAccount ua : team.getSurgicalTeamList()) {
-                    Object[] row = new Object[3];
+                    Object[] row = new Object[4];
                     row[0] = ua;
-                    row[1] = ua.getEmployee().getName();
-                    row[2] = ua.getRole().toString();
+                    row[1] = ua.getEmployee().getId();
+                    row[2] = ua.getEmployee().getName();
+                    row[3] = trimString(ua.getRole().toString());
 
                     dtm.addRow(row);
                 }
@@ -290,5 +291,11 @@ public class ManageTeamJPanel extends javax.swing.JPanel {
             }
         }
         return myTeam;
+    }
+    
+    private String trimString(String str){
+        int index = str.lastIndexOf(".");
+        String trimedString = str.substring(index+1, str.length()-4);
+        return trimedString;
     }
 }

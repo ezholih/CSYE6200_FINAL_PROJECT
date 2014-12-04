@@ -67,8 +67,6 @@ public class UserAccount {
         return workQueue;
     }
 
-    
-    
     @Override
     public String toString() {
         return username;

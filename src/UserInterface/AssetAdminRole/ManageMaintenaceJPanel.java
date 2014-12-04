@@ -91,7 +91,7 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Device ID", "Last Maint Date", "Next Maint Date", "Days Left", "Maint Status"
+                "Device ID", "Last Maint Date", "Next Maint Date", "Days Left", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -280,14 +280,17 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
             row[2] = dateFormat.format(md.getMaintScheduleHistory().getLastMaintenace().getNextMaintDate());
             if(today.after(md.getMaintScheduleHistory().getLastMaintenace().getNextMaintDate())){
                 row[3] = "Expired";
+                md.setStatus("Out Of Service");
+                row[4] = md.getStatus();
             }else{
                 DateTime firstTime = new DateTime(md.getMaintScheduleHistory().getLastMaintenace().getNextMaintDate());
                 DateTime secondTime = new DateTime(today);
                 int days = Days.daysBetween(new LocalDate(secondTime),
                         new LocalDate(firstTime)).getDays();
                 row[3] = days;
+                row[4] = md.getStatus();
             }
-            row[4] = md.getStatus();
+            
             
             dtm.addRow(row);
         }

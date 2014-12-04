@@ -21,6 +21,7 @@ import Business.SurgeryRoom.SurgeryRoom;
 import Business.SurgeryRoom.SurgeryRoomDirectory;
 import Business.UserAccount.SurgicalTeam;
 import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
@@ -226,7 +227,8 @@ public class ManageSurgeryJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackJButtonActionPerformed
-
+        userProcessContainer.remove(this);
+        ((CardLayout)userProcessContainer.getLayout()).previous(userProcessContainer);
     }//GEN-LAST:event_BackJButtonActionPerformed
 
     private void reserveJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveJButtonActionPerformed

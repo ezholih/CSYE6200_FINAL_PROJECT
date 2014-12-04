@@ -132,6 +132,11 @@ public class ManageProductJPanel extends javax.swing.JPanel {
 
         delProductJButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         delProductJButton2.setText("Delete Product");
+        delProductJButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delProductJButton2ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -179,10 +184,11 @@ public class ManageProductJPanel extends javax.swing.JPanel {
     private void viewProductJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewProductJButtonActionPerformed
         // TODO add your handling code here:
         int selectedRow = productJTable.getSelectedRow();
-        MedicalDeviceProduct mdp = (MedicalDeviceProduct)productJTable.getValueAt(selectedRow, 0);
-        if(mdp == null){
+        if(selectedRow < 0 ){
             JOptionPane.showMessageDialog(null, "Please select a product to continue!");
+            return;
         }
+        MedicalDeviceProduct mdp = (MedicalDeviceProduct)productJTable.getValueAt(selectedRow, 0);
         ViewProductJPanel vpjp = new ViewProductJPanel(userProcessContainer, mdp);
         userProcessContainer.add("ViewProductJPanel", vpjp);
         ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
@@ -198,6 +204,17 @@ public class ManageProductJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         populateTable();
     }//GEN-LAST:event_refreshJButtonActionPerformed
+
+    private void delProductJButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delProductJButton2ActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = productJTable.getSelectedRow();
+        if(selectedRow < 0 ){
+            JOptionPane.showMessageDialog(null, "Please select a product to continue!");
+            return;
+        }
+        MedicalDeviceProduct mdp = (MedicalDeviceProduct)productJTable.getValueAt(selectedRow, 0);        
+        supplierOrganization.getmDProductCatalog().delProduct(mdp);
+    }//GEN-LAST:event_delProductJButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

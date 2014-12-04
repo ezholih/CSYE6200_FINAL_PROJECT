@@ -30,6 +30,7 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
     private Organization organization;
     private Network network;
     private String date; 
+    private Date today;
    
     public ViewInventoryJPanel(JPanel upc, Organization org, Network nw) {
         initComponents();
@@ -38,6 +39,7 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
         this.network = nw;
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         date = format.format(new Date());
+        today = new Date();
         
         populateDeviceTable();
     }
@@ -50,25 +52,16 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         deviceJTable = new javax.swing.JTable();
         backJButton = new javax.swing.JButton();
         viewHistoryJButton = new javax.swing.JButton();
-
-        setLayout(new java.awt.GridBagLayout());
+        scheduleJButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("View Inventory");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(13, 12, 0, 0);
-        add(jLabel1, gridBagConstraints);
 
         deviceJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -78,7 +71,7 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Device ID", "Name", "Location", "Maint Status"
+                "Device ID", "Name", "Location", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -91,19 +84,6 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(deviceJTable);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 425;
-        gridBagConstraints.ipady = 150;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 35);
-        add(jScrollPane1, gridBagConstraints);
-
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -111,12 +91,6 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
                 backJButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(45, 12, 44, 0);
-        add(backJButton, gridBagConstraints);
 
         viewHistoryJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         viewHistoryJButton.setText("Maintenance History >>");
@@ -125,12 +99,47 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
                 viewHistoryJButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(45, 113, 44, 35);
-        add(viewHistoryJButton, gridBagConstraints);
+
+        scheduleJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        scheduleJButton.setText("Request Schedule >>");
+        scheduleJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scheduleJButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(backJButton)
+                        .addGap(188, 188, 188)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(viewHistoryJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(scheduleJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(viewHistoryJButton)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(scheduleJButton)
+                    .addComponent(backJButton))
+                .addContainerGap(94, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
@@ -142,7 +151,7 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int selectedRow = deviceJTable.getSelectedRow();
         if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(null, "No product is selected!");
+            JOptionPane.showMessageDialog(null, "No equipment is selected!");
             return;
         }
         
@@ -152,12 +161,27 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
          ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
     }//GEN-LAST:event_viewHistoryJButtonActionPerformed
 
+    private void scheduleJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scheduleJButtonActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = deviceJTable.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "No equipment is selected!");
+            return;
+        }
+        
+        MedicalDevice md = (MedicalDevice)deviceJTable.getValueAt(selectedRow, 0);
+        ReqeustScheduleJPanel jp = new ReqeustScheduleJPanel(userProcessContainer, md, organization);
+        userProcessContainer.add("ReqeustScheduleJPanel", jp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
+    }//GEN-LAST:event_scheduleJButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backJButton;
     private javax.swing.JTable deviceJTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton scheduleJButton;
     private javax.swing.JButton viewHistoryJButton;
     // End of variables declaration//GEN-END:variables
 
@@ -171,11 +195,15 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
             row[1] = md.getName();
             
             if(((AssetMgtOrganization)organization).searchDeviceByDate(md, date)){
-                row[2] = ((AssetMgtOrganization)organization).getRequestByDate(date).getHospitalEnterpise();
+                row[2] = ((AssetMgtOrganization)organization).getRequestByDate(date).getHospitalEnterpise().toString()
+                        +" Room" + ((AssetMgtOrganization)organization).getRequestByDate(date).getSurgeryRoom().getRoomnumber().toString();
             }else{
                 row[2] = md.getLocation();
             }
-            
+            if(today.after(md.getMaintScheduleHistory().getLastMaintenace().getNextMaintDate())){
+                md.setStatus("Out Of Service");
+
+            }
             row[3] = md.getStatus();
             
             dtm.addRow(row);

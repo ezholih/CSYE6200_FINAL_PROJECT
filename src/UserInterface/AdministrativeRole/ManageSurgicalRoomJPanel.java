@@ -211,7 +211,7 @@ public class ManageSurgicalRoomJPanel extends javax.swing.JPanel {
         room.setFloor(floor);
         room.setRoomnumber(txtRoomNumber.getText());
         room.setAddress(txtAddress.getText());
-
+        populateRoomTable();
     }//GEN-LAST:event_addRoomJButtonActionPerformed
 
 

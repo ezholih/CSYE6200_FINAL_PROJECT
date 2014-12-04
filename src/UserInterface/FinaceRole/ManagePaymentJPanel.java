@@ -290,6 +290,7 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
         payment.setPayBy(userAccount);
         payment.setPayTo(bill.getBillBy());
         payment.setAccount(account);
+        populateBillTable();
     }//GEN-LAST:event_makePaymentJButtonActionPerformed
 
     private void cashJRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashJRadioButtonActionPerformed
@@ -323,20 +324,25 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
     private void populateBillTable() {
         DefaultTableModel dtm = (DefaultTableModel)paymentJTable.getModel();
         dtm.setRowCount(0);
+        boolean result = false;
         
         for(Bill bill : ((FinanceOrganization)organization).getBillDirectory().getBillList()){
             for(Payment pay : ((FinanceOrganization)organization).getPaymentDirectory().getPaymentList()){
-                if(!(pay.getBill().equals(bill))){
-                    Object[] row = new Object[5];
-                    row[0] = bill;
-                    row[1] = bill.getAmount();
-                    row[2] = bill.getBillBy().getEmployee().getName();
-                    Enterprise ep = network.getEnterpriseDirectory().getEnterpriseByUserAccount(bill.getBillBy());
-                    row[3] = ep.toString();
-                    row[4] = bill.getAccountNumber();
-
-                    dtm.addRow(row);
+                if(pay.getBill().equals(bill)){
+                    result = true;
+                    break;
                 }
+            }
+            if(!result){
+                Object[] row = new Object[5];
+                row[0] = bill;
+                row[1] = bill.getAmount();
+                row[2] = bill.getBillBy().getEmployee().getName();
+                Enterprise ep = network.getEnterpriseDirectory().getEnterpriseByUserAccount(bill.getBillBy());
+                row[3] = ep.toString();
+                row[4] = bill.getAccountNumber();
+
+                dtm.addRow(row);
             }
         }
     }

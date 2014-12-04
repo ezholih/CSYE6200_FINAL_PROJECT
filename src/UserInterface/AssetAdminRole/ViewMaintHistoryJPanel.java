@@ -38,6 +38,8 @@ public class ViewMaintHistoryJPanel extends javax.swing.JPanel {
         this.network = nw;
         problemJTxtArea.setVisible(false);
         solutionJTxtArea.setVisible(false);
+        txtID.setText(String.valueOf(md.getDeviceID()));
+        txtModel.setText(md.getModel());
         
         
         populateNewHistoryTable();
