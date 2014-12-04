@@ -6,6 +6,13 @@
 
 package UserInterface.FinaceRole;
 
+import Business.EcoSystem;
+import Business.Network.Network;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Martin
@@ -15,8 +22,20 @@ public class AccountingWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form AccountingWorkAreaJPanel
      */
-    public AccountingWorkAreaJPanel() {
+    private JPanel userProcessContainer;
+    private Organization organization;
+    private EcoSystem system;
+    private UserAccount userAccount;
+    private Network network;
+    
+    public AccountingWorkAreaJPanel(JPanel upc, Organization org, EcoSystem ecosys, UserAccount ua, Network nw) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.organization = org;
+        this.system= ecosys;
+        this.userAccount= ua;
+        this.network = nw;
+        
     }
 
     /**
@@ -38,6 +57,11 @@ public class AccountingWorkAreaJPanel extends javax.swing.JPanel {
 
         paymentMgnJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         paymentMgnJButton.setText("Manage Payment >>");
+        paymentMgnJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paymentMgnJButtonActionPerformed(evt);
+            }
+        });
 
         paymentViewJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         paymentViewJButton.setText("View Payment History >>");
@@ -70,6 +94,13 @@ public class AccountingWorkAreaJPanel extends javax.swing.JPanel {
                 .addContainerGap(183, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void paymentMgnJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentMgnJButtonActionPerformed
+        // TODO add your handling code here:
+        ManagePaymentJPanel jp = new ManagePaymentJPanel(userProcessContainer, organization, userAccount, network);
+        userProcessContainer.add("ManageProductJPanel", jp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);       
+    }//GEN-LAST:event_paymentMgnJButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

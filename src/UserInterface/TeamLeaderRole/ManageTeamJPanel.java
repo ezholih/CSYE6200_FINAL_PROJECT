@@ -6,6 +6,18 @@
 
 package UserInterface.TeamLeaderRole;
 
+import Business.EnterPrise.Enterprise;
+import Business.Organization.MedStaffOrganization;
+import Business.Organization.Organization;
+import Business.Role.DoctorRole;
+import Business.Role.NurseRole;
+import Business.UserAccount.SurgicalTeam;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Martin
@@ -15,8 +27,22 @@ public class ManageTeamJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ManageTeamJPanel
      */
-    public ManageTeamJPanel() {
+    private JPanel userProcessContainer;
+    private MedStaffOrganization organization;
+    private Enterprise enterprise;
+    private UserAccount userAccount;
+    private SurgicalTeam myTeam;
+    
+    public ManageTeamJPanel(JPanel upc, MedStaffOrganization org, UserAccount ua) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.organization = org;
+        this.userAccount = ua;
+        myTeam = getMyTeam();
+        
+        populateTeamTable();
+        populateDocComboBox();
+        populateNurComboBox();
     }
 
     /**
@@ -35,8 +61,9 @@ public class ManageTeamJPanel extends javax.swing.JPanel {
         doctorJComboBox = new javax.swing.JComboBox();
         nurseJComboBox = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
-        addJButton = new javax.swing.JButton();
+        addDoctorJButton = new javax.swing.JButton();
         BackJButton = new javax.swing.JButton();
+        addNurseJButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Manage Team Member");
@@ -72,8 +99,13 @@ public class ManageTeamJPanel extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Nurse");
 
-        addJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        addJButton.setText("Add Team Member");
+        addDoctorJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        addDoctorJButton.setText("Add Doctor");
+        addDoctorJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addDoctorJButtonActionPerformed(evt);
+            }
+        });
 
         BackJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         BackJButton.setText("<< Back");
@@ -83,32 +115,38 @@ public class ManageTeamJPanel extends javax.swing.JPanel {
             }
         });
 
+        addNurseJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        addNurseJButton.setText("Add Nurse");
+        addNurseJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNurseJButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(nurseJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(40, 40, 40)
+                                .addComponent(doctorJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(nurseJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(40, 40, 40)
-                                    .addComponent(doctorJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(162, 162, 162)
-                        .addComponent(addJButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(BackJButton)))
+                            .addComponent(addDoctorJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addNurseJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BackJButton))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -121,27 +159,53 @@ public class ManageTeamJPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(doctorJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(doctorJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addDoctorJButton))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(nurseJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(addJButton)
+                    .addComponent(nurseJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addNurseJButton))
                 .addGap(18, 18, 18)
                 .addComponent(BackJButton)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackJButtonActionPerformed
-
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout)userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);       
     }//GEN-LAST:event_BackJButtonActionPerformed
+
+    private void addDoctorJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDoctorJButtonActionPerformed
+        // TODO add your handling code here:
+        UserAccount doctor = (UserAccount)doctorJComboBox.getSelectedItem();
+        if(null != doctor){
+            myTeam.addTeamMember(doctor);
+            organization.getUserAccountDirectory().removeUaVacancy(doctor);
+        }
+        populateDocComboBox();
+        populateNurComboBox();
+        populateTeamTable();
+    }//GEN-LAST:event_addDoctorJButtonActionPerformed
+
+    private void addNurseJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNurseJButtonActionPerformed
+        UserAccount nurse = (UserAccount)nurseJComboBox.getSelectedItem();
+        if(null != nurse){
+            myTeam.addTeamMember(nurse);
+            organization.getUserAccountDirectory().removeUaVacancy(nurse);
+        }   
+        populateDocComboBox();
+        populateNurComboBox();
+        populateTeamTable();// TODO add your handling code here:
+    }//GEN-LAST:event_addNurseJButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackJButton;
-    private javax.swing.JButton addJButton;
+    private javax.swing.JButton addDoctorJButton;
+    private javax.swing.JButton addNurseJButton;
     private javax.swing.JComboBox doctorJComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -150,4 +214,52 @@ public class ManageTeamJPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox nurseJComboBox;
     private javax.swing.JTable teamJTable;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTeamTable() {
+        DefaultTableModel dtm = (DefaultTableModel) teamJTable.getModel();
+        dtm.setRowCount(0);
+
+        for (SurgicalTeam team : organization.getSurgicalTeamList()) {
+            if (team.getTeamLeader().equals(userAccount)) {
+                myTeam = team;
+                for (UserAccount ua : team.getSurgicalTeamList()) {
+                    Object[] row = new Object[3];
+                    row[0] = ua;
+                    row[1] = ua.getEmployee().getName();
+                    row[2] = ua.getRole().toString();
+
+                    dtm.addRow(row);
+                }
+            }
+        }
+    }
+
+    private void populateDocComboBox() {
+        doctorJComboBox.removeAllItems();
+        for (UserAccount ua : organization.getUserAccountDirectory().getUaVacancyList()) {
+            if (ua.getRole() instanceof DoctorRole) {
+                doctorJComboBox.addItem(ua);
+            }
+        }
+    }
+
+    private void populateNurComboBox() {
+        nurseJComboBox.removeAllItems();
+        for (UserAccount ua : organization.getUserAccountDirectory().getUaVacancyList()) {
+            if (ua.getRole() instanceof NurseRole) {
+                nurseJComboBox.addItem(ua);
+            }
+        }
+    }
+
+    private SurgicalTeam getMyTeam() {
+        SurgicalTeam myTeam = null;
+        for(SurgicalTeam team : ((MedStaffOrganization)organization).getSurgicalTeamList()){
+            if(team.getTeamLeader().equals(userAccount)){
+                myTeam = team;
+                break;
+            }
+        }
+        return myTeam;
+    }
 }

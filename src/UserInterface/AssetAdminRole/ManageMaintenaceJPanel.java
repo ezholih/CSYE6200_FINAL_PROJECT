@@ -220,8 +220,8 @@ public class ManageMaintenaceJPanel extends javax.swing.JPanel {
             }else{
                 DateTime firstTime = new DateTime(md.getMaintScheduleHistory().getLastMaintenace().getNextMaintDate());
                 DateTime secondTime = new DateTime(today);
-                int days = Days.daysBetween(new LocalDate(firstTime),
-                        new LocalDate(secondTime)).getDays();
+                int days = Days.daysBetween(new LocalDate(secondTime),
+                        new LocalDate(firstTime)).getDays();
                 row[3] = days;
             }
             row[4] = md.getStatus();

@@ -9,20 +9,19 @@ import Business.EnterPrise.Enterprise;
 import Business.Network.Network;
 import Business.Organization.MedStaffOrganization;
 import Business.Organization.Organization;
-import Business.UserAccount.SurgicalTeam;
 import Business.UserAccount.UserAccount;
-import UserInterface.TeamLeaderRole.TeamLeaderWorkAreaJPanel;
+import UserInterface.FinaceRole.AccountingWorkAreaJPanel;
 import javax.swing.JPanel;
 
 /**
  *
  * @author raunak
  */
-public class TeamLeaderRole extends Role{
-    
+public class AccountingRole extends Role{
+
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business, Network network) {
-        return new TeamLeaderWorkAreaJPanel(userProcessContainer, account, (MedStaffOrganization)organization, business, network);
+        return new AccountingWorkAreaJPanel(userProcessContainer, organization, business,account,network);
     }
     
     

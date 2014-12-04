@@ -27,8 +27,14 @@ public class MedicalDeviceInventory {
         return medicalDeviceList;
     }
     
-    public MedicalDevice addDevice(MaintSchedule.MaintType mType, int interval){
+    public MedicalDevice addDevice(MedicalDeviceProduct mdp, MaintSchedule.MaintType mType, int interval){
         MedicalDevice md = new MedicalDevice(mType, interval);
+        md.setClassification(mdp.getClassification());
+        md.setDescription(mdp.getDescription());
+        md.setModel(mdp.getModel());
+        md.setName(mdp.getName());
+        md.setPrice(mdp.getPrice());
+        md.setManufacturer(mdp.getManufacturer());
         medicalDeviceList.add(md);
         return md;
     }

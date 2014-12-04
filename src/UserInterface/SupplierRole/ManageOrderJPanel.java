@@ -13,11 +13,11 @@ import Business.EnterPrise.PHSEnterpise;
 import Business.Network.Network;
 import Business.Order.Order;
 import Business.Order.OrderItem;
-import Business.Organization.AssetMgtOrganization;
-import Business.Organization.FinaceOrganization;
+import Business.Organization.FinanceOrganization;
 import Business.Organization.Organization;
 import Business.Organization.SupplierOrganization;
 import Business.Payment.Payment;
+import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -37,15 +37,17 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
      */
     private JPanel userProcessContainer;
     private SupplierOrganization supplierOrganization;
-    private FinaceOrganization finaceOrganization;
-    private EcoSystem ecoSystem;
+    private FinanceOrganization finaceOrganization;
+    private Network network;
+    private UserAccount userAccount;
     
-    public ManageOrderJPanel(JPanel upc, SupplierOrganization supOrg, EcoSystem ecosys) {
+    public ManageOrderJPanel(JPanel upc, SupplierOrganization supOrg, Network nw, UserAccount ua) {
         initComponents();
         this.userProcessContainer = upc;
         this.supplierOrganization = supOrg;
-        this.ecoSystem = ecosys;
+        this.network = nw;
         this.finaceOrganization = getFinaceOrganization();
+        this.userAccount = ua;
         populateOrderTable();
         populateOrderItemTable(new Order());
         orderJTable.setCellSelectionEnabled(true);
@@ -149,7 +151,7 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
         jLabel3.setText("Order Item Table");
 
         billJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        billJButton.setText("Create Bill");
+        billJButton.setText("Send Bill");
         billJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 billJButtonActionPerformed(evt);
@@ -209,14 +211,14 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(billJButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(txtBankName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
-                        .addComponent(txtAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(txtBankName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txtAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(billJButton))
                 .addGap(31, 31, 31)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -240,7 +242,11 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
     private void billJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_billJButtonActionPerformed
         // TODO add your handling code here:
         int selectedRow = orderJTable.getSelectedRow();
-        Order order = (Order)orderDetailJTable.getValueAt(selectedRow, 0);
+        if(selectedRow <0){
+            JOptionPane.showMessageDialog(null, "No order is selected!");
+            return;
+        }
+        Order order = (Order)orderJTable.getValueAt(selectedRow, 0);
         int accountNumber = 00000000;
         if(txtBankName.getText()==null || txtAccountNumber.getText()==null){
             JOptionPane.showMessageDialog(null, "Bank info is not complete.");
@@ -253,15 +259,14 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
             return;
         }
         
-        for(Network nw:ecoSystem.getNetworkList()){
-            for(Enterprise ep : nw.getEnterpriseDirectory().getEnterpriseList()){
-                if(ep instanceof PHSEnterpise){
-                    for(Organization org : ep.getOrganazDirectory().getOrganizationList()){
-                        if(org instanceof FinaceOrganization){
-                            Bill bill = ((FinaceOrganization)org).getBillDirectory().createBill(order);
-                            bill.setAccountNumber(accountNumber);
-                            bill.setBankName(txtBankName.getText());
-                        }
+        for(Enterprise ep : network.getEnterpriseDirectory().getEnterpriseList()){
+            if(ep instanceof PHSEnterpise){
+                for(Organization org : ep.getOrganazDirectory().getOrganizationList()){
+                    if(org instanceof FinanceOrganization){
+                        Bill bill = ((FinanceOrganization)org).getBillDirectory().createBill(order);
+                        bill.setAccountNumber(accountNumber);
+                        bill.setBankName(txtBankName.getText());
+                        bill.setBillBy(userAccount);
                     }
                 }
             }
@@ -272,9 +277,9 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
     private void deliverJButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deliverJButton1ActionPerformed
         // TODO add your handling code here:
         int selectedRow = orderJTable.getSelectedRow();
-        Order order = (Order)orderDetailJTable.getValueAt(selectedRow, 0);
+        Order order = (Order)orderJTable.getValueAt(selectedRow, 0);
         if( order != null){
-            ManageDeliveryJPanel mdjp = new ManageDeliveryJPanel(userProcessContainer, order, ecoSystem);
+            ManageDeliveryJPanel mdjp = new ManageDeliveryJPanel(userProcessContainer, order, network);
             userProcessContainer.add("ManageDeliveryJPanel",mdjp);
             ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
         }else{
@@ -332,7 +337,7 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
     }
     
     private void populateOrderItemTable(Order order){
-        DefaultTableModel orderItemTable = (DefaultTableModel)orderJTable.getModel();
+        DefaultTableModel orderItemTable = (DefaultTableModel)orderDetailJTable.getModel();
         orderItemTable.setRowCount(0);
         
         for(OrderItem oi : order.getOiList()){
@@ -348,14 +353,12 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
         
     }
     
-    private FinaceOrganization getFinaceOrganization(){
-        for(Network nw : ecoSystem.getNetworkList()){
-            for(Enterprise ep : nw.getEnterpriseDirectory().getEnterpriseList()){
-                if (ep.getEnterpriseType().equals(Enterprise.EnterpriseType.PHS)){
-                    for(Organization org : ep.getOrganazDirectory().getOrganizationList()){
-                        if(org instanceof FinaceOrganization){
-                            return (FinaceOrganization)org;
-                        }
+    private FinanceOrganization getFinaceOrganization(){
+        for(Enterprise ep : network.getEnterpriseDirectory().getEnterpriseList()){
+            if (ep.getEnterpriseType().equals(Enterprise.EnterpriseType.PHS)){
+                for(Organization org : ep.getOrganazDirectory().getOrganizationList()){
+                    if(org instanceof FinanceOrganization){
+                        return (FinanceOrganization)org;
                     }
                 }
             }
@@ -367,10 +370,6 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
         public void valueChanged(ListSelectionEvent e) {
             int selectedRow = orderJTable.getSelectedRow();
             Order od = (Order)orderJTable.getValueAt(selectedRow, 0);
-            if(od == null){
-                JOptionPane.showMessageDialog(null, "No order is selected!");
-                return;
-            }
             populateOrderItemTable(od);
         }
     }

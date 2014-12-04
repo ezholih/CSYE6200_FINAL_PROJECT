@@ -5,13 +5,12 @@
 package UserInterface.TeamLeaderRole;
 
 import Business.EcoSystem;
-import Business.Organization.DoctorOrganization;
+import Business.Network.Network;
+import Business.Organization.MedStaffOrganization;
+import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import Business.WorkQueue.LabTestWorkRequest;
-import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,18 +19,20 @@ import javax.swing.table.DefaultTableModel;
 public class TeamLeaderWorkAreaJPanel extends javax.swing.JPanel {
 
     private JPanel userProcessContainer;
-    private DoctorOrganization organization;
+    private MedStaffOrganization organization;
     private EcoSystem business;
     private UserAccount userAccount;
+    private Network network;
     /**
      * Creates new form DoctorWorkAreaJPanel
      */
-    public TeamLeaderWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, DoctorOrganization organization, EcoSystem business) {
+    public TeamLeaderWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, Organization organization, EcoSystem ecosys, Network nw) {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;
-        this.organization = organization;
-        this.business = business;
+        this.organization = (MedStaffOrganization)organization;
+        this.business = ecosys;
+        this.network = nw;
         this.userAccount = account;
         
     }
@@ -57,12 +58,27 @@ public class TeamLeaderWorkAreaJPanel extends javax.swing.JPanel {
 
         teamMgnJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         teamMgnJButton.setText("Manage Team Member >>");
+        teamMgnJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teamMgnJButtonActionPerformed(evt);
+            }
+        });
 
         surgeryMgnJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         surgeryMgnJButton.setText("Manage Surgery Schedule>>");
+        surgeryMgnJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                surgeryMgnJButtonActionPerformed(evt);
+            }
+        });
 
         surgeryMgnJButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         surgeryMgnJButton1.setText("View Surgery Schedul >>");
+        surgeryMgnJButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                surgeryMgnJButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -95,6 +111,28 @@ public class TeamLeaderWorkAreaJPanel extends javax.swing.JPanel {
                 .addContainerGap(112, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void teamMgnJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamMgnJButtonActionPerformed
+        // TODO add your handling code here:
+        
+        ManageTeamJPanel mnpjp = new ManageTeamJPanel(userProcessContainer, organization, userAccount);
+        userProcessContainer.add("ManageTeamJPanel", mnpjp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
+    }//GEN-LAST:event_teamMgnJButtonActionPerformed
+
+    private void surgeryMgnJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surgeryMgnJButtonActionPerformed
+        // TODO add your handling code here:
+        ManageSurgeryJPanel mnpjp = new ManageSurgeryJPanel(userProcessContainer, userAccount, organization, business);
+        userProcessContainer.add("ManageSurgeryJPanel", mnpjp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);        
+    }//GEN-LAST:event_surgeryMgnJButtonActionPerformed
+
+    private void surgeryMgnJButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surgeryMgnJButton1ActionPerformed
+        // TODO add your handling code here:
+        ViewSurgerySchedulsJPanel mnpjp = new ViewSurgerySchedulsJPanel(userProcessContainer, userAccount, network);
+        userProcessContainer.add("ViewSurgerySchedulsJPanel", mnpjp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);               
+    }//GEN-LAST:event_surgeryMgnJButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

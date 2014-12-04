@@ -16,7 +16,7 @@ import Business.Surgery.SurgeryScheduleDirectory;
 public class SurgeryRoom {
     
     private String roomnumber;
-    private String floor;
+    private int floor;
     private String address;
     private SurgeryScheduleDirectory sgyScheduleDirectory;
 
@@ -37,11 +37,11 @@ public class SurgeryRoom {
         this.roomnumber = roomnumber;
     }
 
-    public String getFloor() {
+    public int getFloor() {
         return floor;
     }
 
-    public void setFloor(String floor) {
+    public void setFloor(int floor) {
         this.floor = floor;
     }
 
@@ -53,6 +53,8 @@ public class SurgeryRoom {
         this.address = address;
     }
     
-    
+    public String toString(){
+        return roomnumber;
+    }
     
 }

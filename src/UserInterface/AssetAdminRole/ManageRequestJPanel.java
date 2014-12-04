@@ -6,17 +6,34 @@
 
 package UserInterface.AssetAdminRole;
 
+import Business.Organization.AssetMgtOrganization;
+import Business.Organization.Organization;
+import Business.Surgery.SurgeryRequest;
+import Business.SurgeryRoom.SurgeryRoom;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Martin
  */
-public class ManageReservationJPanel extends javax.swing.JPanel {
+public class ManageRequestJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form ReservationMgnJPanel
      */
-    public ManageReservationJPanel() {
+    private JPanel userProcessContainer;
+    private Organization organization;
+    
+    
+    public ManageRequestJPanel(JPanel upc, Organization org) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.organization = org;
+        
+        populateRequestTable();
     }
 
     /**
@@ -29,12 +46,12 @@ public class ManageReservationJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        reservationJTable = new javax.swing.JTable();
+        requestJTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         backJButton = new javax.swing.JButton();
         reserveJButton = new javax.swing.JButton();
 
-        reservationJTable.setModel(new javax.swing.table.DefaultTableModel(
+        requestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -42,7 +59,7 @@ public class ManageReservationJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Device ID", "Name", "Request Date", "Maint Status", "Maint Date"
+                "Request Date", "Device ID", "Name", "Next Maint", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -53,7 +70,7 @@ public class ManageReservationJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(reservationJTable);
+        jScrollPane1.setViewportView(requestJTable);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Manage Reservation");
@@ -63,6 +80,11 @@ public class ManageReservationJPanel extends javax.swing.JPanel {
 
         reserveJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         reserveJButton.setText("Approve");
+        reserveJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reserveJButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -95,12 +117,44 @@ public class ManageReservationJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void reserveJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveJButtonActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = requestJTable.getSelectedRow();
+        if(selectedRow <0){
+            JOptionPane.showMessageDialog(null, "No request is selected");
+            return;
+        }
+        
+        SurgeryRequest request = (SurgeryRequest)requestJTable.getValueAt(selectedRow, 0);
+        request.setStatus("Approved");
+        SurgeryRoom room = request.getSurgeryRoom();
+        room.getSgyScheduleDirectory().getSurgeryScheduleList().add(request.getSurgerySchedule());
+    }//GEN-LAST:event_reserveJButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backJButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable reservationJTable;
+    private javax.swing.JTable requestJTable;
     private javax.swing.JButton reserveJButton;
     // End of variables declaration//GEN-END:variables
+
+    private void populateRequestTable() {
+        DefaultTableModel dtm = (DefaultTableModel)requestJTable.getModel();
+        dtm.setRowCount(0);
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+        
+        for(SurgeryRequest request : ((AssetMgtOrganization)organization).getSurgeryRequestList()){
+            Object[] row = new Object[5];
+            
+            row[0] = request;
+            row[1] = request.getSurgerySchedule().getMedicalDevice().getDeviceID();
+            row[2] = request.getSurgerySchedule().getMedicalDevice().getName();
+            row[3] = dateformat.format(request.getSurgerySchedule().getMedicalDevice().getMaintScheduleHistory().getLastMaintenace().getNextMaintDate());
+            row[4] = request.getStatus();
+            
+            dtm.addRow(row);
+        }
+    }
 }

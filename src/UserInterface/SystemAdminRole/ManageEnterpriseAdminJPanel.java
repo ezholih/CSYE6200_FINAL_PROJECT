@@ -10,6 +10,7 @@ import Business.EcoSystem;
 import Business.Employee.Employee;
 import Business.EnterPrise.Enterprise;
 import Business.EnterPrise.Enterprise.EnterpriseType;
+import Business.EnterPrise.SupplierEnterpise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Role.HSPAdminRole;
@@ -40,6 +41,7 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
         this.userProcessContainer = upc;
         this.system = network;
         
+        populateUserTable();
         populateUserTable();
         populateComboBox();
     }
@@ -214,10 +216,9 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
             enterprise.getUserAccountDirectory().createUserAccount(userName, password, employee, new HSPAdminRole());
             populateUserTable();
         }else if (enterprise.getEnterpriseType().equals(EnterpriseType.Supplier)){
-//            enterprise.getUserAccountDirectory().createUserAccount(userName, password, employee, new SupplierRole());
             Organization org = enterprise.getOrganazDirectory().createOrganization(Organization.Type.Supplier);
             org.getUserAccountDirectory().createUserAccount(userName, password, employee, new SupplierRole());
-            populateSupplierUserTable();
+            populateUserTable();
         }
     }//GEN-LAST:event_createJButtonActionPerformed
 
@@ -251,13 +252,26 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
         
         for(Network nw : system.getNetworkList()){
             for(Enterprise ep : nw.getEnterpriseDirectory().getEnterpriseList()){
-                for(UserAccount ua : ep.getUserAccountDirectory().getUserAccountList()){
-                    Object[] row = new Object[3];
-                    row[0] = ep.getName();
-                    row[1] = nw.getName();
-                    row[2] = ua.getUsername();
+                if(ep instanceof SupplierEnterpise){
+                    for (Organization org : ep.getOrganazDirectory().getOrganizationList()) {
+                        for (UserAccount ua : org.getUserAccountDirectory().getUserAccountList()) {
+                            Object[] row = new Object[3];
+                            row[0] = ep.getName();
+                            row[1] = nw.getName();
+                            row[2] = ua.getUsername();
 
-                    model.addRow(row);
+                            model.addRow(row);
+                        }
+                    }               
+                }else{
+                    for (UserAccount ua : ep.getUserAccountDirectory().getUserAccountList()) {
+                        Object[] row = new Object[3];
+                        row[0] = ep.getName();
+                        row[1] = nw.getName();
+                        row[2] = ua.getUsername();
+
+                        model.addRow(row);
+                    }
                 }
             }
         }

@@ -6,7 +6,11 @@
 
 package Business.SurgeryRoom;
 
+import Business.MedicalDevice.MedicalDevice;
+import Business.Surgery.SurgerySchedule;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -34,6 +38,38 @@ public class SurgeryRoomDirectory {
         return surgeryRoomList;
     }
     
+    public boolean searchDevice(MedicalDevice medicalDevice, String date){
+        boolean result = false;
+        String scheduleDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        for(SurgeryRoom room : surgeryRoomList){
+            for(SurgerySchedule surgerySchedule : room.getSgyScheduleDirectory().getSurgeryScheduleList()){
+                scheduleDate = dateFormat.format(surgerySchedule.getDate());
+               if((surgerySchedule.getMedicalDevice().equals(medicalDevice)) && (scheduleDate.equals(date))){
+                   result = true;
+                   break;
+               }
+            }
+        }
+        return result;
+    }
     
+    public boolean searchRoom(SurgeryRoom room, String date){
+        boolean result = false;
+        String scheduleDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        for(SurgeryRoom r : surgeryRoomList){
+            if(r.equals(room)){
+                for(SurgerySchedule schedule : r.getSgyScheduleDirectory().getSurgeryScheduleList()){
+                    scheduleDate = dateFormat.format(schedule.getDate());
+                    if(scheduleDate.equals(date)){
+                        result = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
     
 }

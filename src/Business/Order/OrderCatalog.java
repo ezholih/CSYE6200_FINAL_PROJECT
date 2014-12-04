@@ -14,12 +14,14 @@ import java.util.ArrayList;
  */
 public class OrderCatalog {
     
-    private static int orderCatID = 1000;
+    private int orderCatID;
+    private static int count = 1000;
     private ArrayList<Order> orderList;
 
     public OrderCatalog() {
         orderList = new ArrayList<>();
-        orderCatID = orderCatID+1000;
+        orderCatID = count;
+        count++;
     }
 
 

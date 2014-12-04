@@ -8,6 +8,7 @@ package UserInterface.AdministrativeRole;
 
 import Business.EcoSystem;
 import Business.EnterPrise.Enterprise;
+import Business.EnterPrise.HospitalEnterpise;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
@@ -19,11 +20,20 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     
     JPanel userProcessContainer;
     Enterprise enterprise;
+    
     /** Creates new form AdminWorkAreaJPanel */
     public AdminWorkAreaJPanel(JPanel userProcessContainer, Enterprise enterprise) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.enterprise = enterprise;
+        
+        if(enterprise instanceof HospitalEnterpise){
+            roomJButton.setVisible(true);
+            roomJButton.setEnabled(true);
+        }else{
+            roomJButton.setVisible(false);
+            roomJButton.setEnabled(false);
+        }
     }
     
     /** This method is called from within the constructor to
@@ -38,36 +48,77 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         userJButton = new javax.swing.JButton();
         manageEmployeeJButton = new javax.swing.JButton();
         manageOrganizationJButton = new javax.swing.JButton();
+        roomJButton = new javax.swing.JButton();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setText("Administrator Work Area");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("My Work Area -Aminstrative Role");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, -1, -1));
-
-        userJButton.setText("Manage User");
+        userJButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        userJButton.setText("Manage User Account");
         userJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userJButtonActionPerformed(evt);
             }
         });
-        add(userJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, 140, -1));
 
+        manageEmployeeJButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         manageEmployeeJButton.setText("Manage Employee");
         manageEmployeeJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 manageEmployeeJButtonActionPerformed(evt);
             }
         });
-        add(manageEmployeeJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 140, -1));
 
+        manageOrganizationJButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         manageOrganizationJButton.setText("Manage Organization");
         manageOrganizationJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 manageOrganizationJButtonActionPerformed(evt);
             }
         });
-        add(manageOrganizationJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, -1, -1));
+
+        roomJButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        roomJButton.setText("Manage Surgical Room");
+        roomJButton.setEnabled(false);
+        roomJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roomJButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(userJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(roomJButton, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                            .addComponent(manageEmployeeJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(manageOrganizationJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(163, 163, 163))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(46, 46, 46)
+                .addComponent(manageOrganizationJButton)
+                .addGap(39, 39, 39)
+                .addComponent(manageEmployeeJButton)
+                .addGap(44, 44, 44)
+                .addComponent(userJButton)
+                .addGap(44, 44, 44)
+                .addComponent(roomJButton)
+                .addContainerGap(88, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void userJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userJButtonActionPerformed
@@ -80,7 +131,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_userJButtonActionPerformed
 
     private void manageEmployeeJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageEmployeeJButtonActionPerformed
-
+        
         ManageEmployeeJPanel manageEmployeeJPanel = new ManageEmployeeJPanel(userProcessContainer, enterprise.getOrganazDirectory());
         userProcessContainer.add("manageEmployeeJPanel", manageEmployeeJPanel);
 
@@ -91,17 +142,26 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void manageOrganizationJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageOrganizationJButtonActionPerformed
 
-        ManageOrganizationJPanel manageOrganizationJPanel = new ManageOrganizationJPanel(userProcessContainer, enterprise.getOrganazDirectory());
+        ManageOrganizationJPanel manageOrganizationJPanel = new ManageOrganizationJPanel(userProcessContainer, enterprise);
         userProcessContainer.add("manageOrganizationJPanel", manageOrganizationJPanel);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);
     }//GEN-LAST:event_manageOrganizationJButtonActionPerformed
+
+    private void roomJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomJButtonActionPerformed
+        // TODO add your handling code here:
+        ManageSurgicalRoomJPanel msrjp = new ManageSurgicalRoomJPanel(userProcessContainer, enterprise);
+        userProcessContainer.add("ManageSurgicalRoomJPanel", msrjp);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_roomJButtonActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton manageEmployeeJButton;
     private javax.swing.JButton manageOrganizationJButton;
+    private javax.swing.JButton roomJButton;
     private javax.swing.JButton userJButton;
     // End of variables declaration//GEN-END:variables
     

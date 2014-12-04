@@ -6,7 +6,8 @@ package Business.Role;
 
 import Business.EcoSystem;
 import Business.EnterPrise.Enterprise;
-import Business.Organization.DoctorOrganization;
+import Business.Network.Network;
+import Business.Organization.MedStaffOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import UserInterface.TeamLeaderRole.TeamLeaderWorkAreaJPanel;
@@ -19,8 +20,8 @@ import javax.swing.JPanel;
 public class DoctorRole extends Role{
 
     @Override
-    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
-        return new TeamLeaderWorkAreaJPanel(userProcessContainer, account, (DoctorOrganization)organization, business);
+    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business, Network network) {
+        return null;
     }
     
     

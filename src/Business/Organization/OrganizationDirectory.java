@@ -25,12 +25,8 @@ public class OrganizationDirectory {
     
     public Organization createOrganization(Type type){
         Organization organization = null;
-        if (type.getValue().equals(Type.Doctor.getValue())){
-            organization = new DoctorOrganization();
-            organizationList.add(organization);
-        }
-        else if (type.getValue().equals(Type.Nurse.getValue())){
-            organization = new NurseOrganization();
+        if (type.getValue().equals(Type.MedStaff.getValue())){
+            organization = new MedStaffOrganization();
             organizationList.add(organization);
         }else if(type.getValue().equals(Type.Supplier.getValue())){
             organization = new SupplierOrganization();
@@ -38,13 +34,17 @@ public class OrganizationDirectory {
         }else if(type.getValue().equals(Type.AssetMgt.getValue())){
             organization = new AssetMgtOrganization();
             organizationList.add(organization);
-        }else if(type.getValue().equals(Type.HSPAdmin.getValue())){
-            organization = new HSPAdminOrganization();
-            organizationList.add(organization);
-        }else if(type.getValue().equals(Type.PHSAdmin.getValue())){
-            organization = new PHSAdminOrganization();
+        }else if(type.getValue().equals(Type.Finace.getValue())){
+            organization = new FinanceOrganization();
             organizationList.add(organization);
         }
+//        else if(type.getValue().equals(Type.HSPAdmin.getValue())){
+//            organization = new HSPAdminOrganization();
+//            organizationList.add(organization);
+//        }else if(type.getValue().equals(Type.PHSAdmin.getValue())){
+//            organization = new PHSAdminOrganization();
+//            organizationList.add(organization);
+//        }
         return organization;
     }
 }

@@ -6,6 +6,7 @@ package Business.Role;
 
 import Business.EcoSystem;
 import Business.EnterPrise.Enterprise;
+import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import UserInterface.SupplierRole.SupplierWokAreaJPanel;
@@ -18,8 +19,8 @@ import javax.swing.JPanel;
 public class SupplierRole extends Role{
 
     @Override
-    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem system) {
-        return new SupplierWokAreaJPanel(userProcessContainer, organization, system, account);
+    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem system, Network network) {
+        return new SupplierWokAreaJPanel(userProcessContainer, organization, system, account, network);
     }
 
     

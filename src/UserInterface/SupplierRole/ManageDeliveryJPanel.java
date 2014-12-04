@@ -33,10 +33,12 @@ public class ManageDeliveryJPanel extends javax.swing.JPanel {
     private EcoSystem ecoSystem;
     private Order order;
     private AssetMgtOrganization assetMgtOrganization;
+    private Network network;
     
-    public ManageDeliveryJPanel(JPanel upc, Order od, EcoSystem ecosys) {
+    public ManageDeliveryJPanel(JPanel upc, Order od, Network nw) {
         initComponents();
         this.userProcessContainer = upc;
+        this.network = nw;
         this.order = od;
         this.assetMgtOrganization = getAssetMgtOrganization();
         populateComboBox();
@@ -52,7 +54,6 @@ public class ManageDeliveryJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        orderItemJComboBox = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtClass = new javax.swing.JTextField();
@@ -72,16 +73,10 @@ public class ManageDeliveryJPanel extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtMaintInterval = new javax.swing.JTextField();
+        orderItemJComboBox = new javax.swing.JComboBox();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Delivery Management");
-
-        orderItemJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        orderItemJComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                orderItemJComboBoxActionPerformed(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Select Order Item");
@@ -138,6 +133,13 @@ public class ManageDeliveryJPanel extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Maintenace Interval");
 
+        orderItemJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        orderItemJComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderItemJComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,10 +148,6 @@ public class ManageDeliveryJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(orderItemJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(backJButton)
@@ -179,6 +177,10 @@ public class ManageDeliveryJPanel extends javax.swing.JPanel {
                                 .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtModel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(orderItemJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
@@ -237,17 +239,6 @@ public class ManageDeliveryJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void orderItemJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderItemJComboBoxActionPerformed
-        // TODO add your handling code here:
-        OrderItem orderItem = (OrderItem)orderItemJComboBox.getSelectedItem();
-        txtID.setText(String.valueOf(orderItem.getMdProduct().getProductID()));
-        txtName.setText(orderItem.getMdProduct().getName());
-        txtModel.setText(orderItem.getMdProduct().getModel());
-        txtClass.setText(orderItem.getMdProduct().getClassification());
-        txtPrice.setText(String.valueOf(orderItem.getMdProduct().getPrice()));
-        txtQuantity.setText(String.valueOf(orderItem.getQuantity()));
-    }//GEN-LAST:event_orderItemJComboBoxActionPerformed
-
     private void deliverJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deliverJButtonActionPerformed
         // TODO add your handling code here:        
         int interval = 0;
@@ -260,7 +251,7 @@ public class ManageDeliveryJPanel extends javax.swing.JPanel {
         OrderItem oi = (OrderItem)orderItemJComboBox.getSelectedItem();
         MedicalDevice md;
         for(int i = 0; i < oi.getQuantity(); i++){
-            md = assetMgtOrganization.getMedicalDeviceInventory().addDevice(MaintSchedule.MaintType.REG, interval);
+            md = assetMgtOrganization.getMedicalDeviceInventory().addDevice(oi.getMdProduct(), MaintSchedule.MaintType.REG, interval);
             md.setStatus("Operational");
             md.setLocation("Inventory");
             md.setManufactureDate(deliverJDateChooser.getDate());
@@ -273,6 +264,19 @@ public class ManageDeliveryJPanel extends javax.swing.JPanel {
         userProcessContainer.remove(this);
         ((CardLayout)userProcessContainer.getLayout()).previous(userProcessContainer);        
     }//GEN-LAST:event_backJButtonActionPerformed
+
+    private void orderItemJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderItemJComboBoxActionPerformed
+        // TODO add your handling code here:
+        OrderItem oi = (OrderItem)orderItemJComboBox.getSelectedItem();
+        if(null != oi){
+            txtName.setText(oi.getMdProduct().getName());
+            txtClass.setText(oi.getMdProduct().getClassification());
+            txtID.setText(String.valueOf(oi.getMdProduct().getProductID()));
+            txtModel.setText(oi.getMdProduct().getModel());
+            txtQuantity.setText(String.valueOf(oi.getQuantity()));
+            txtPrice.setText(String.valueOf(oi.getMdProduct().getPrice()));
+        }
+    }//GEN-LAST:event_orderItemJComboBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -300,13 +304,11 @@ public class ManageDeliveryJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private AssetMgtOrganization getAssetMgtOrganization() {
-        for(Network nw : ecoSystem.getNetworkList()){
-            for(Enterprise ep : nw.getEnterpriseDirectory().getEnterpriseList()){
-                if (ep.getEnterpriseType().equals(Enterprise.EnterpriseType.PHS)){
-                    for(Organization org : ep.getOrganazDirectory().getOrganizationList()){
-                        if(org instanceof AssetMgtOrganization){
-                            return (AssetMgtOrganization)org;
-                        }
+        for (Enterprise ep : network.getEnterpriseDirectory().getEnterpriseList()) {
+            if (ep.getEnterpriseType().equals(Enterprise.EnterpriseType.PHS)) {
+                for (Organization org : ep.getOrganazDirectory().getOrganizationList()) {
+                    if (org instanceof AssetMgtOrganization) {
+                        return (AssetMgtOrganization) org;
                     }
                 }
             }

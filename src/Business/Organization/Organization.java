@@ -27,10 +27,10 @@ public abstract class Organization {
         PHSAdmin("PHS Admin Organization"), 
         HSPAdmin("Hospital Admin Organization"),
         Supplier("Supplier Organization"),
-        Doctor("Doctor Organization"), 
+        MedStaff("Medical Staff Organization"), 
         Finace("Finace Organization"), 
-        AssetMgt("Asset Management Organization"),
-        Nurse("Nurse Organization");
+        AssetMgt("Asset Management Organization");
+        
         private String value;
         private Type(String value) {
             this.value = value;

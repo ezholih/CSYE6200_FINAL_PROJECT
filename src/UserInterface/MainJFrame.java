@@ -139,6 +139,7 @@ public class MainJFrame extends javax.swing.JFrame {
         UserAccount userAccount = system.getUserAccountDirectory().authenticateUser(userName, password);
         Enterprise inEnterprise = null;
         Organization inOrganization = null;
+        Network inNetwork = null;
         
         if(userAccount == null){
         //Step 2 go inside each network to check enterprises
@@ -151,11 +152,13 @@ public class MainJFrame extends javax.swing.JFrame {
                             if(userAccount != null){
                                 inEnterprise = ep;
                                 inOrganization = org;
+                                inNetwork = nw;
                                 break;
                             }
                         }
                     }else{
                         inEnterprise = ep;
+                        inNetwork = nw;
                         break;
                     }
                     if(inOrganization != null){
@@ -172,7 +175,7 @@ public class MainJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Invalid User Account!");
         }else{
             CardLayout layout = (CardLayout) container.getLayout();
-            container.add("workArea", userAccount.getRole().createWorkArea(container, userAccount, inOrganization, inEnterprise, system));
+            container.add("workArea", userAccount.getRole().createWorkArea(container, userAccount, inOrganization, inEnterprise, system, inNetwork));
             layout.next(container);
         }
         

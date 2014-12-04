@@ -8,6 +8,8 @@ package Business.Surgery;
 
 
 
+import Business.MedicalDevice.MedicalDevice;
+import Business.UserAccount.SurgicalTeam;
 import com.db4o.collections.ActivatableArrayList;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,11 +34,11 @@ public class SurgeryScheduleDirectory {
         this.surgeryScheduleList = surgeryScheduleList;
     }
     
-    public SurgerySchedule createSurgerySchedule(Date date){
-        SurgerySchedule sgySchedule = new SurgerySchedule(date);
-        surgeryScheduleList.add(sgySchedule);
-        return sgySchedule;
-    }
+//    public SurgerySchedule createSurgerySchedule(SurgicalTeam team, Date date, MedicalDevice md){
+//        SurgerySchedule sgySchedule = new SurgerySchedule(team, date, md);
+//        surgeryScheduleList.add(sgySchedule);
+//        return sgySchedule;
+//    }
     
     public void delSurgerySchedule(SurgerySchedule sgyschedule){
         surgeryScheduleList.remove(sgyschedule);

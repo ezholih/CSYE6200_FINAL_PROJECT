@@ -61,7 +61,9 @@ public abstract class Enterprise extends Organization{
         this.enterpriseType = enterpriseType;
     }
     
-    
+    public String toString(){
+        return super.getName();
+    }
     
     
 }

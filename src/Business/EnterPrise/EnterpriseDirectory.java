@@ -6,6 +6,8 @@
 
 package Business.EnterPrise;
 
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
 import com.db4o.collections.ActivatableArrayList;
 import java.util.ArrayList;
 
@@ -44,5 +46,20 @@ public class EnterpriseDirectory {
         }
         
         return enterprise;
+    }
+    
+    public Enterprise getEnterpriseByUserAccount(UserAccount ua){
+        Enterprise ent = null;
+        for(Enterprise ep: enterpriseList){
+            for(Organization org : ep.getOrganazDirectory().getOrganizationList()){
+                for(UserAccount account : org.getUserAccountDirectory().getUserAccountList()){
+                    if(account.equals(ua)){
+                        ent = ep;
+                        break;
+                    }
+                }
+            }
+        }
+        return ent;
     }
 }

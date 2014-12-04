@@ -14,9 +14,11 @@ import java.util.ArrayList;
  */
 public class SurgicalTeam {
     
+    private UserAccount teamLeader;
     private ArrayList<UserAccount> surgicalTeamList;
 
-    public SurgicalTeam() {
+    public SurgicalTeam(UserAccount leader) {
+        teamLeader = leader;
         surgicalTeamList = new ArrayList<>();
     }
 
@@ -36,4 +38,10 @@ public class SurgicalTeam {
         }
         return userAccount;
     }
+
+    public UserAccount getTeamLeader() {
+        return teamLeader;
+    }
+    
+    
 }

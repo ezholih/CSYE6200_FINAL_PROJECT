@@ -21,10 +21,21 @@ public class Payment {
     private UserAccount payTo;
     private Date paymentDate;
     private String paymentType;
+    private int Account;
 
     public String getPaymentType() {
         return paymentType;
     }
+
+    public int getAccount() {
+        return Account;
+    }
+
+    public void setAccount(int Account) {
+        this.Account = Account;
+    }
+    
+    
 
     public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
@@ -35,6 +46,7 @@ public class Payment {
         this.bill = bill;
         paymentDate = new Date();
         bill.getOrder().setStatus("Payed");
+        Account = 00000000;
     }
 
     public UserAccount getPayBy() {

@@ -10,6 +10,8 @@ import Business.MedicalDevice.MedicalDevice;
 import Business.Organization.AssetMgtOrganization;
 import Business.Organization.Organization;
 import java.awt.CardLayout;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,11 +26,14 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
      */
     private JPanel userProcessContainer;
     private Organization organization;
-    
+    private String date; 
+   
     public ViewInventoryJPanel(JPanel upc, Organization org) {
         initComponents();
         this.userProcessContainer = upc;
         this.organization = org;
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        date = format.format(new Date());
         
         populateDeviceTable();
     }
@@ -125,7 +130,13 @@ public class ViewInventoryJPanel extends javax.swing.JPanel {
             Object[] row = new Object[4];
             row[0] = md;
             row[1] = md.getName();
-            row[2] = md.getLocation();
+            
+            if(((AssetMgtOrganization)organization).searchDeviceByDate(md, date)){
+                row[2] = ((AssetMgtOrganization)organization).getRequestByDate(date).getHospitalEnterpise();
+            }else{
+                row[2] = md.getLocation();
+            }
+            
             row[3] = md.getStatus();
             
             dtm.addRow(row);

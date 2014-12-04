@@ -35,7 +35,7 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
         this.userProcessContainer = upc;
         this.userAccount = ua;
         
-        poplateRequestTable();
+        poplateNewRequestTable();
         maintenanceJTable.setCellSelectionEnabled(true);
         ListSelectionModel cellSelectionModel = maintenanceJTable.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -186,6 +186,7 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
                 ms.setFixDesp(solutionJTxtArea.getText());
             }
             md.setStatus("Operational");
+            md.setLocation("Inventory");
             userAccount.getMaintRequestList().getMaintDevicesList().remove(md);
             poplateRequestTable();
         }
@@ -206,9 +207,23 @@ public class ManageMaintJPanel extends javax.swing.JPanel {
     private javax.swing.JButton submitJButton;
     // End of variables declaration//GEN-END:variables
 
-    private void poplateRequestTable() {
+    private void poplateNewRequestTable() {
         DefaultTableModel dtm = (DefaultTableModel)maintenanceJTable.getModel();
         dtm.setRowCount(0);
+        
+        for(MedicalDevice md : userAccount.getMaintRequestList().getMaintDevicesList()){
+            Object[] row = new Object[4];
+            row [0] = md;
+            row [1] = md.getName();
+            row [2] = md.getModel();
+            row [3] = md.getMaintScheduleHistory().getLastMaintenace().getmType();
+            
+            dtm.addRow(row);
+        }
+    }
+    
+    private void poplateRequestTable() {
+        DefaultTableModel dtm = (DefaultTableModel)maintenanceJTable.getModel();
         
         for(MedicalDevice md : userAccount.getMaintRequestList().getMaintDevicesList()){
             Object[] row = new Object[4];

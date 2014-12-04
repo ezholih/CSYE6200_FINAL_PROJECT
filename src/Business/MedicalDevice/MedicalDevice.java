@@ -17,16 +17,17 @@ import java.util.Date;
  */
 public class MedicalDevice extends MedicalDeviceProduct{
     
-    private static int deviceID = 1;
+    private int deviceID;
+    private static int count =1;
     private MaintHistory maintScheduleHistory;
     private Date manufactureDate;
     private String status;
     private String location;
 
     public MedicalDevice(MaintSchedule.MaintType mType, int interval) {
-        deviceID++;
-        deviceID = super.getProductID()*100+deviceID;
+        deviceID = super.getProductID()*100+count;
         maintScheduleHistory = new MaintHistory(mType, interval);
+        count++;
     }
 
     public String getLocation() {

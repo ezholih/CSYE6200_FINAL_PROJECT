@@ -7,8 +7,10 @@
 package UserInterface.AssetAdminRole;
 
 import Business.EcoSystem;
+import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 /**
@@ -24,13 +26,15 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
     private Organization organization;
     private EcoSystem ecoSystem;
     private UserAccount userAccount;
+    private Network network;
     
-    public AssetAdminWorkAreaJPanel(JPanel upc, Organization org, EcoSystem ecosys, UserAccount ua) {
+    public AssetAdminWorkAreaJPanel(JPanel upc, UserAccount ua, Organization org, EcoSystem ecosys, Network nw) {
         initComponents();
         this.userProcessContainer = upc;
         this.organization = org;
         this.ecoSystem = ecosys;
         this.userAccount = ua;
+        this.network = nw;
     }
 
     /**
@@ -45,7 +49,7 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         newDeviceJButton = new javax.swing.JButton();
         reservationJButton = new javax.swing.JButton();
-        reservationJButton1 = new javax.swing.JButton();
+        maintenaceJButton = new javax.swing.JButton();
         viewDeviceJButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -53,15 +57,35 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
 
         newDeviceJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         newDeviceJButton.setText("Device Purchase Management >>");
+        newDeviceJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newDeviceJButtonActionPerformed(evt);
+            }
+        });
 
         reservationJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        reservationJButton.setText("Device Reservation Management >>");
+        reservationJButton.setText("Surgery Request Management >>");
+        reservationJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reservationJButtonActionPerformed(evt);
+            }
+        });
 
-        reservationJButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        reservationJButton1.setText("Device Maintenance Management >>");
+        maintenaceJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        maintenaceJButton.setText("Device Maintenance Management >>");
+        maintenaceJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maintenaceJButtonActionPerformed(evt);
+            }
+        });
 
         viewDeviceJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         viewDeviceJButton.setText("View Inventory >>");
+        viewDeviceJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewDeviceJButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -75,7 +99,7 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(reservationJButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(maintenaceJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(newDeviceJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(reservationJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(viewDeviceJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -91,19 +115,47 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addGap(43, 43, 43)
                 .addComponent(reservationJButton)
                 .addGap(44, 44, 44)
-                .addComponent(reservationJButton1)
+                .addComponent(maintenaceJButton)
                 .addGap(41, 41, 41)
                 .addComponent(viewDeviceJButton)
                 .addContainerGap(75, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void newDeviceJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDeviceJButtonActionPerformed
+        // TODO add your handling code here:
+        ManagePurchaseJPanel mpjp = new ManagePurchaseJPanel(userProcessContainer, network);
+        userProcessContainer.add("ManagePurchaseJPanel",mpjp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
+    }//GEN-LAST:event_newDeviceJButtonActionPerformed
+
+    private void reservationJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationJButtonActionPerformed
+        // TODO add your handling code here:
+        ManageRequestJPanel mrjp = new ManageRequestJPanel(userProcessContainer, organization);
+        userProcessContainer.add("ManageRequestJPanel",mrjp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
+    }//GEN-LAST:event_reservationJButtonActionPerformed
+
+    private void maintenaceJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintenaceJButtonActionPerformed
+        // TODO add your handling code here:
+        ManageMaintenaceJPanel mrjp = new ManageMaintenaceJPanel(userProcessContainer, organization);
+        userProcessContainer.add("ManageMaintenaceJPanel",mrjp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);        
+    }//GEN-LAST:event_maintenaceJButtonActionPerformed
+
+    private void viewDeviceJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewDeviceJButtonActionPerformed
+        // TODO add your handling code here:
+        ViewInventoryJPanel mrjp = new ViewInventoryJPanel(userProcessContainer, organization);
+        userProcessContainer.add("ViewInventoryJPanel",mrjp);
+        ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);      
+    }//GEN-LAST:event_viewDeviceJButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton maintenaceJButton;
     private javax.swing.JButton newDeviceJButton;
     private javax.swing.JButton reservationJButton;
-    private javax.swing.JButton reservationJButton1;
     private javax.swing.JButton viewDeviceJButton;
     // End of variables declaration//GEN-END:variables
 }

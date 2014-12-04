@@ -14,7 +14,8 @@ import Business.UserAccount.UserAccount;
  */
 public class MedicalDeviceProduct {
     
-    private static int productID = 1000;
+    private int productID;
+    private static int count=1;
     private String name;
     private String model;
     private String description;
@@ -23,7 +24,8 @@ public class MedicalDeviceProduct {
     private UserAccount manufacturer;
 
     public MedicalDeviceProduct() {
-        productID = productID++;
+        productID = count;
+        count++;
     }
 
     public int getProductID() {

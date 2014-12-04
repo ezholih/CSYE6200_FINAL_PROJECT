@@ -6,6 +6,7 @@ package Business.Role;
 
 import Business.EcoSystem;
 import Business.EnterPrise.Enterprise;
+import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
@@ -40,7 +41,7 @@ public abstract class Role {
         }
     }
     
-    public abstract JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business);
+    public abstract JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business, Network network);
 
     @Override
     public String toString() {

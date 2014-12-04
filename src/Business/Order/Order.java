@@ -18,18 +18,20 @@ import java.util.ArrayList;
 public class Order {
     
     private ArrayList<OrderItem> oiList;
-    private static int internalID = 100;
+    private static int count = 100;
     private int orderID;
     private String status;
 
     public Order() {
         oiList = new ArrayList<>();
-        internalID = internalID+1;
+        orderID = count;
+        count++;
+        
         status = "Ordered";
     }
 
     public void setOrderID(int prefix) {
-        orderID = prefix+internalID;
+        orderID = prefix+count;
     }
     
     public int getOrderID() {
@@ -67,7 +69,7 @@ public class Order {
     public double getTotalPrice(){
         double total = 0;
         for(OrderItem oi : this.oiList){
-            total = total + oi.getMdProduct().getPrice();
+            total = oi.getQuantity()*oi.getMdProduct().getPrice();
         }
         return total;
     }

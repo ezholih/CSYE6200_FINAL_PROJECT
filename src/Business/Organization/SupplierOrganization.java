@@ -6,10 +6,9 @@ package Business.Organization;
 
 import Business.Maintenance.MaintRequestList;
 import Business.MedicalDevice.MDProductCatalog;
-import Business.MedicalDevice.MedicalDevice;
 import Business.Order.OrderCatalog;
-import Business.Role.DoctorRole;
 import Business.Role.Role;
+import Business.Role.SupplierRole;
 import java.util.ArrayList;
 
 /**
@@ -41,13 +40,11 @@ public class SupplierOrganization extends Organization{
     public MDProductCatalog getmDProductCatalog() {
         return mDProductCatalog;
     }
-    
-    
-    
+  
     @Override
     public ArrayList<Role> getSupportedRole() {
         ArrayList<Role> roles = new ArrayList<>();
-        roles.add(new DoctorRole());
+        roles.add(new SupplierRole());
         return roles;
     }
      

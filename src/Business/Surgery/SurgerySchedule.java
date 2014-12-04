@@ -6,6 +6,8 @@
 
 package Business.Surgery;
 
+import Business.MedicalDevice.MedicalDevice;
+import Business.UserAccount.SurgicalTeam;
 import Business.UserAccount.UserAccount;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,26 +20,29 @@ import javax.swing.JOptionPane;
 public class SurgerySchedule {
     
     private Date date;
-    private ArrayList<UserAccount> team;
+    private SurgicalTeam surgicalTeam;
+    private MedicalDevice medicalDevice;
 
-    public SurgerySchedule() {
-        team = new ArrayList<>();
-        date = new Date();
+    public SurgerySchedule(SurgicalTeam team, Date d, MedicalDevice md) {
+        this.surgicalTeam = team;
+        this.date = d;
+        this.medicalDevice = md;
+        
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public MedicalDevice getMedicalDevice() {
+        return medicalDevice;
     }
     
-    public void addTeamMember(UserAccount ua){
-        for(UserAccount u:team){
-            if( ua.getEmployee().getId() == u.getEmployee().getId()){
-                JOptionPane.showMessageDialog(null, "This user is already a team member!");
-                return;
-            }
-        }
-        team.add(ua);
+
+    public SurgicalTeam getSurgicalTeam() {
+        return surgicalTeam;
     }
     
-    public SurgerySchedule(Date date) {
-        this.date = date;
-    }
     
     
 }

@@ -6,6 +6,12 @@
 
 package UserInterface.FinaceRole;
 
+import Business.Order.Order;
+import Business.Order.OrderItem;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Martin
@@ -15,8 +21,16 @@ public class ViewOrderDetailJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ViewOrderDetailJPanel
      */
-    public ViewOrderDetailJPanel() {
+    private JPanel userProcessContainer;
+    private Order order;
+    
+    public ViewOrderDetailJPanel(JPanel upc, Order od) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.order = od;
+        txtOrderID.setText(String.valueOf(order.getOrderID()));
+        
+        populateOrderTable();
     }
 
     /**
@@ -30,7 +44,7 @@ public class ViewOrderDetailJPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        orderJTable = new javax.swing.JTable();
         backJButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtOrderID = new javax.swing.JTextField();
@@ -38,7 +52,7 @@ public class ViewOrderDetailJPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("View Order Detail");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        orderJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -57,10 +71,15 @@ public class ViewOrderDetailJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(orderJTable);
 
         backJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         backJButton.setText("<< Back");
+        backJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backJButtonActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Order ID");
@@ -96,11 +115,16 @@ public class ViewOrderDetailJPanel extends javax.swing.JPanel {
                     .addComponent(txtOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
                 .addComponent(backJButton)
-                .addContainerGap())
+                .addContainerGap(55, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
+        userProcessContainer.remove(this);
+        ((CardLayout)userProcessContainer.getLayout()).previous(userProcessContainer);        
+    }//GEN-LAST:event_backJButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -108,7 +132,22 @@ public class ViewOrderDetailJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable orderJTable;
     private javax.swing.JTextField txtOrderID;
     // End of variables declaration//GEN-END:variables
+
+    private void populateOrderTable() {
+        DefaultTableModel dtm = (DefaultTableModel)orderJTable.getModel();
+        dtm.setRowCount(0);
+        
+        for(OrderItem oi : order.getOiList()){
+            Object[] row = new Object[4];
+            row[0] = oi.getMdProduct().getName();
+            row[1] = oi.getMdProduct().getModel();
+            row[2] = oi.getMdProduct().getPrice();
+            row[3] = oi.getQuantity();
+            
+            dtm.addRow(row);
+        }
+    }
 }

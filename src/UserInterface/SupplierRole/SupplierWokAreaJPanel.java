@@ -7,6 +7,7 @@
 package UserInterface.SupplierRole;
 
 import Business.EcoSystem;
+import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Organization.SupplierOrganization;
 import Business.UserAccount.UserAccount;
@@ -27,10 +28,12 @@ public class SupplierWokAreaJPanel extends javax.swing.JPanel {
     private SupplierOrganization supplierOrganization;
     private EcoSystem ecoSystem;
     private UserAccount userAccount;
+    private Network network;
    
-    public SupplierWokAreaJPanel(JPanel upc, Organization supOrg, EcoSystem ecosys, UserAccount ua) {
+    public SupplierWokAreaJPanel(JPanel upc, Organization supOrg, EcoSystem ecosys, UserAccount ua, Network nw) {
         initComponents();
         this.userProcessContainer = upc;
+        this.network = nw;
         if(supOrg instanceof SupplierOrganization){
             this.supplierOrganization = (SupplierOrganization)supOrg;
         }else{
@@ -122,7 +125,7 @@ public class SupplierWokAreaJPanel extends javax.swing.JPanel {
 
     private void mgnOrderJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mgnOrderJButtonActionPerformed
         // TODO add your handling code here:
-        ManageOrderJPanel mojp = new ManageOrderJPanel(userProcessContainer, supplierOrganization, ecoSystem);
+        ManageOrderJPanel mojp = new ManageOrderJPanel(userProcessContainer, supplierOrganization, network,userAccount);
         userProcessContainer.add("ManageOrderJPanel", mojp);
         ((CardLayout)userProcessContainer.getLayout()).next(userProcessContainer);
     }//GEN-LAST:event_mgnOrderJButtonActionPerformed

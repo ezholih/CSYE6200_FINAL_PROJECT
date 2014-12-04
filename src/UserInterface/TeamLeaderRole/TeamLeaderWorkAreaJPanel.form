@@ -67,6 +67,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Manage Team Member &gt;&gt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="teamMgnJButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="surgeryMgnJButton">
       <Properties>
@@ -75,6 +78,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Manage Surgery Schedule&gt;&gt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="surgeryMgnJButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="surgeryMgnJButton1">
       <Properties>
@@ -83,6 +89,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="View Surgery Schedul &gt;&gt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="surgeryMgnJButton1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

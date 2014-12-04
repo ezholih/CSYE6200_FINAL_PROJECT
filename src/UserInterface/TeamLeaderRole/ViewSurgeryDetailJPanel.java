@@ -6,17 +6,31 @@
 
 package UserInterface.TeamLeaderRole;
 
+import Business.Surgery.SurgeryRequest;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import java.text.SimpleDateFormat;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Martin
  */
-public class ViewSurgeryJPanel extends javax.swing.JPanel {
+public class ViewSurgeryDetailJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form ViewSurgeryJPanel
      */
-    public ViewSurgeryJPanel() {
+    private JPanel userProcessContainer;
+    private SurgeryRequest surgeryRequest;
+    public ViewSurgeryDetailJPanel(JPanel upc, SurgeryRequest request) {
         initComponents();
+        this.userProcessContainer = upc;
+        this.surgeryRequest = request;
+        
+        populateTeamTable();
+        showDetail();
     }
 
     /**
@@ -43,14 +57,14 @@ public class ViewSurgeryJPanel extends javax.swing.JPanel {
         txtDate = new javax.swing.JTextField();
         txtHospital = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtHospital1 = new javax.swing.JTextField();
+        txtRoom = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         BackJButton = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("View Surgery Schedule");
+        jLabel2.setText("View Surgery Detail");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Team Member");
@@ -91,9 +105,9 @@ public class ViewSurgeryJPanel extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Hospital");
 
-        txtHospital1.addActionListener(new java.awt.event.ActionListener() {
+        txtRoom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtHospital1ActionPerformed(evt);
+                txtRoomActionPerformed(evt);
             }
         });
 
@@ -102,6 +116,11 @@ public class ViewSurgeryJPanel extends javax.swing.JPanel {
 
         BackJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         BackJButton.setText("<< Back");
+        BackJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackJButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -140,7 +159,7 @@ public class ViewSurgeryJPanel extends javax.swing.JPanel {
                             .addGap(25, 25, 25)
                             .addComponent(jLabel9)
                             .addGap(18, 18, 18)
-                            .addComponent(txtHospital1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -161,7 +180,7 @@ public class ViewSurgeryJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel8)
                     .addComponent(txtHospital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(txtHospital1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -178,9 +197,14 @@ public class ViewSurgeryJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtHospital1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHospital1ActionPerformed
+    private void txtRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRoomActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtHospital1ActionPerformed
+    }//GEN-LAST:event_txtRoomActionPerformed
+
+    private void BackJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackJButtonActionPerformed
+        userProcessContainer.remove(this);
+        ((CardLayout)userProcessContainer.getLayout()).previous(userProcessContainer);        // TODO add your handling code here:
+    }//GEN-LAST:event_BackJButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -201,6 +225,30 @@ public class ViewSurgeryJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtDevName;
     private javax.swing.JTextField txtDevPermission;
     private javax.swing.JTextField txtHospital;
-    private javax.swing.JTextField txtHospital1;
+    private javax.swing.JTextField txtRoom;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTeamTable() {
+        DefaultTableModel dtm = (DefaultTableModel) teamJTable.getModel();
+        dtm.setRowCount(0);
+        
+        for(UserAccount ua : surgeryRequest.getSurgerySchedule().getSurgicalTeam().getSurgicalTeamList()){
+            Object[] row = new Object[3];
+            row[0] = ua.getEmployee().getId();
+            row[1] = ua.getEmployee().getName();
+            row[2] = ua.getRole().toString();
+            
+            dtm.addRow(row);
+        }
+    }
+
+    private void showDetail() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        txtDate.setText(format.format(surgeryRequest.getSurgerySchedule().getDate()));
+        txtHospital.setText(surgeryRequest.getHospitalEnterpise().getName());
+        txtRoom.setText(surgeryRequest.getSurgeryRoom().getRoomnumber());
+        txtDevName.setText(surgeryRequest.getSurgerySchedule().getMedicalDevice().getName());
+        txtDevModel.setText(surgeryRequest.getSurgerySchedule().getMedicalDevice().getModel());
+        txtDevPermission.setText(surgeryRequest.getStatus());
+    }
 }
