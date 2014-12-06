@@ -54,6 +54,7 @@ public class MainJFrame extends javax.swing.JFrame {
         container = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jSplitPane1.setDividerLocation(150);
 
@@ -118,15 +119,16 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jSplitPane1.setLeftComponent(jPanel1);
 
-        container.setMinimumSize(new java.awt.Dimension(900, 600));
+        container.setMinimumSize(new java.awt.Dimension(750, 600));
         container.setName(""); // NOI18N
-        container.setPreferredSize(new java.awt.Dimension(900, 600));
+        container.setPreferredSize(new java.awt.Dimension(750, 600));
         container.setLayout(new java.awt.CardLayout());
         jSplitPane1.setRightComponent(container);
 
         getContentPane().add(jSplitPane1, java.awt.BorderLayout.CENTER);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginJButtonActionPerformed

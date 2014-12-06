@@ -45,7 +45,6 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
         newDeviceJButton = new javax.swing.JButton();
@@ -53,16 +52,11 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
         maintenaceJButton = new javax.swing.JButton();
         viewDeviceJButton = new javax.swing.JButton();
 
-        setLayout(new java.awt.GridBagLayout());
+        setMinimumSize(new java.awt.Dimension(500, 450));
+        setPreferredSize(new java.awt.Dimension(500, 450));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Asset Admin Work Area");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(13, 12, 0, 0);
-        add(jLabel1, gridBagConstraints);
 
         newDeviceJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         newDeviceJButton.setText("Device Purchase Management >>");
@@ -71,14 +65,6 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
                 newDeviceJButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 28;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(69, 93, 0, 92);
-        add(newDeviceJButton, gridBagConstraints);
 
         reservationJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         reservationJButton.setText("Surgery Request Management >>");
@@ -87,14 +73,6 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
                 reservationJButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 26;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(43, 93, 0, 92);
-        add(reservationJButton, gridBagConstraints);
 
         maintenaceJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         maintenaceJButton.setText("Device Maintenance Management >>");
@@ -103,13 +81,6 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
                 maintenaceJButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(44, 93, 0, 92);
-        add(maintenaceJButton, gridBagConstraints);
 
         viewDeviceJButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         viewDeviceJButton.setText("View Inventory >>");
@@ -118,14 +89,37 @@ public class AssetAdminWorkAreaJPanel extends javax.swing.JPanel {
                 viewDeviceJButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 144;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(41, 93, 75, 92);
-        add(viewDeviceJButton, gridBagConstraints);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(newDeviceJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(reservationJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(maintenaceJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(viewDeviceJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(86, 86, 86))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(63, 63, 63)
+                .addComponent(newDeviceJButton)
+                .addGap(43, 43, 43)
+                .addComponent(reservationJButton)
+                .addGap(44, 44, 44)
+                .addComponent(maintenaceJButton)
+                .addGap(41, 41, 41)
+                .addComponent(viewDeviceJButton)
+                .addContainerGap(106, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void newDeviceJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDeviceJButtonActionPerformed
