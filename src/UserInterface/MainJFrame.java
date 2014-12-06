@@ -5,14 +5,17 @@
 package UserInterface;
 
 import Business.EcoSystem;
-import Business.ConfigureASystem;
 import Business.DB4OUtil.DB4OUtil;
 import Business.EnterPrise.Enterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import java.io.IOException;
+import java.nio.file.FileSystems;
 import javax.swing.JOptionPane;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 
 /**
@@ -26,10 +29,12 @@ public class MainJFrame extends javax.swing.JFrame {
      */
     private EcoSystem system;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+    private Path dB4OPath;
 
     public MainJFrame() {
         initComponents();
         system = dB4OUtil.retrieveSystem();
+        dB4OPath = FileSystems.getDefault().getPath("C:/DataBank.db4o");
 //        system = ConfigureASystem.configure();
     }
 
@@ -198,6 +203,11 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void logoutJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutJButtonActionPerformed
 
+        try{
+            Files.deleteIfExists(dB4OPath);
+        }catch(IOException | SecurityException e){
+            System.err.println(e);
+        }
         container.removeAll();
         userNameJTextField.setText(null);
         passwordField.setText(null);
