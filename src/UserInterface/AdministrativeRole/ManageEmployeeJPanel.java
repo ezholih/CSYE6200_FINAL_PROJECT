@@ -119,10 +119,10 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 12;
+        gridBagConstraints.gridwidth = 11;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 361;
-        gridBagConstraints.ipady = 66;
+        gridBagConstraints.ipadx = 365;
+        gridBagConstraints.ipady = 78;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -136,11 +136,10 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 10;
         gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 23, 84, 0);
+        gridBagConstraints.insets = new java.awt.Insets(18, 51, 84, 34);
         add(addJButton, gridBagConstraints);
 
         organizationJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -235,6 +234,7 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
         String name = nameJTextField.getText();
         
         organization.getEmployeeDirectory().createEmployee(name);
+        populateTable(organization);
         
     }//GEN-LAST:event_addJButtonActionPerformed
 

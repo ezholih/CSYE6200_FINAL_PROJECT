@@ -30,9 +30,6 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
         system = dB4OUtil.retrieveSystem();
-        if(null == system){
-            system = ConfigureASystem.configure();
-        }
 //        system = ConfigureASystem.configure();
     }
 

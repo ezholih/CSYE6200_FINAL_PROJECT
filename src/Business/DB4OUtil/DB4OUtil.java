@@ -2,6 +2,8 @@ package Business.DB4OUtil;
 
 import Business.ConfigureASystem;
 import Business.EcoSystem;
+import Business.EnterPrise.Enterprise;
+import Business.Network.Network;
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
@@ -61,12 +63,18 @@ public class DB4OUtil {
     
     public EcoSystem retrieveSystem(){
         ObjectContainer conn = createConnection();
-        ObjectSet<EcoSystem> systems = conn.query(EcoSystem.class); // Change to the object you want to save
+        ObjectSet<EcoSystem> systems = conn.query(EcoSystem.class);
         EcoSystem system;
         if (systems.size() == 0) {
             system = ConfigureASystem.configure();  // If there's no System in the record, create a new one
         } else {
             system = systems.get(systems.size()-1);
+            for(Network nw : system.getNetworkList()){
+                for(Enterprise ep : nw.getEnterpriseDirectory().getEnterpriseList()){
+                    System.out.println(ep.getName());
+                }
+                
+            }
         }
         conn.close();
         return system;
