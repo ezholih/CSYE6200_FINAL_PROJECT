@@ -13,6 +13,7 @@ import Business.Role.Role;
 import Business.Role.TeamLeaderRole;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -265,6 +266,15 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         Organization organization = (Organization) organizationJComboBox.getSelectedItem();
         Employee employee = (Employee) employeeJComboBox.getSelectedItem();
         Role role = (Role) roleJComboBox.getSelectedItem();
+        
+        for(Organization org : enterprise.getOrganazDirectory().getOrganizationList()){
+            for(UserAccount ua : org.getUserAccountDirectory().getUserAccountList()){
+                if(userName.equals(ua.getUsername())){
+                    JOptionPane.showMessageDialog(null, "User name already exist, please try a new one.");
+                    return;
+                }
+            }
+        }
         
         UserAccount ua = organization.getUserAccountDirectory().createUserAccount(userName, password, employee, role);
         if(organization instanceof MedStaffOrganization){
