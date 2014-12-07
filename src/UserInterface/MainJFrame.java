@@ -7,15 +7,21 @@ package UserInterface;
 import Business.EcoSystem;
 import Business.DB4OUtil.DB4OUtil;
 import Business.EnterPrise.Enterprise;
+import Business.MedicalDevice.MedicalDevice;
 import Business.Network.Network;
+import Business.Organization.AssetMgtOrganization;
 import Business.Organization.Organization;
+import Business.Role.AssetMgtRole;
 import Business.UserAccount.UserAccount;
+import UserInterface.AssetAdminRole.ManageMaintenaceJPanel;
 import java.awt.CardLayout;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import javax.swing.JOptionPane;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -119,7 +125,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(logoutJButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(loginJLabel)
-                .addContainerGap(404, Short.MAX_VALUE))
+                .addContainerGap(439, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -177,6 +183,19 @@ public class MainJFrame extends javax.swing.JFrame {
                     break;
                 }
             }
+        }
+        
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        
+        if(userAccount.getRole() instanceof AssetMgtRole){
+                if(inOrganization instanceof AssetMgtOrganization){
+                    for(MedicalDevice md : ((AssetMgtOrganization)inOrganization).getMedicalDeviceInventory().getMedicalDeviceList()){
+                        if(md.getMaintScheduleHistory().getLastMaintenace().getNextMaintDate().before(new Date())){
+                            JOptionPane.showMessageDialog(null, "At least one device need maintenance today!");
+                            break;
+                        }
+                    }
+                }
         }
         
         if(userAccount == null){

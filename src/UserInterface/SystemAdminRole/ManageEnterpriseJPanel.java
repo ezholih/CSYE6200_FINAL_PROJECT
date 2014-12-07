@@ -83,6 +83,11 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
         enterpriseTypeJComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         enterpriseTypeJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        enterpriseTypeJComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enterpriseTypeJComboBoxActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Network");
@@ -184,10 +189,19 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Invalid Input!");
             return;
         }
-        
         String name = jTextField1.getText();
+        for(Enterprise ep : network.getEnterpriseDirectory().getEnterpriseList()){
+            if(ep.getName().equals(name)){
+                JOptionPane.showMessageDialog(null, "Enterprise name already exist!");
+                return;                
+            }
+        }
+        
+        
+        
         Enterprise enterprise = network.getEnterpriseDirectory().createAndAddEnterprise(name, type);
         populateEnterpriseTable();
+        jTextField1.setEditable(true);
     }//GEN-LAST:event_createJButtonActionPerformed
 
     private void BackJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackJButtonActionPerformed
@@ -195,6 +209,20 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         CardLayout layout = (CardLayout)userProcessContainer.getLayout();
         layout.previous(userProcessContainer);        // TODO add your handling code here:
     }//GEN-LAST:event_BackJButtonActionPerformed
+
+    private void enterpriseTypeJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseTypeJComboBoxActionPerformed
+        // TODO add your handling code here:
+        Enterprise.EnterpriseType type = (Enterprise.EnterpriseType)enterpriseTypeJComboBox.getSelectedItem();
+        if(type != null){
+            if(type.equals(Enterprise.EnterpriseType.PHS)){
+                jTextField1.setEditable(false);
+                jTextField1.setText("PHS");
+            }else{
+                jTextField1.setEditable(true);
+            }
+        }
+        
+    }//GEN-LAST:event_enterpriseTypeJComboBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

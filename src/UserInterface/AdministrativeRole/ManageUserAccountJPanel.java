@@ -7,6 +7,7 @@ package UserInterface.AdministrativeRole;
 import Business.EcoSystem;
 import Business.Employee.Employee;
 import Business.EnterPrise.Enterprise;
+import Business.Network.Network;
 import Business.Organization.MedStaffOrganization;
 import Business.Organization.Organization;
 import Business.Role.Role;
@@ -28,11 +29,13 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
      */
     private JPanel container;
     private Enterprise enterprise;
+    private EcoSystem system;
 
-    public ManageUserAccountJPanel(JPanel container, Enterprise enterprise) {
+    public ManageUserAccountJPanel(JPanel container, Enterprise enterprise, EcoSystem ecosys) {
         initComponents();
         this.enterprise = enterprise;
         this.container = container;
+        this.system = ecosys;
 
         popOrganizationComboBox();
         employeeJComboBox.removeAllItems();
@@ -267,11 +270,15 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         Employee employee = (Employee) employeeJComboBox.getSelectedItem();
         Role role = (Role) roleJComboBox.getSelectedItem();
         
-        for(Organization org : enterprise.getOrganazDirectory().getOrganizationList()){
-            for(UserAccount ua : org.getUserAccountDirectory().getUserAccountList()){
-                if(userName.equals(ua.getUsername())){
-                    JOptionPane.showMessageDialog(null, "User name already exist, please try a new one.");
-                    return;
+        for(Network network : system.getNetworkList()){
+            for(Enterprise ep : network.getEnterpriseDirectory().getEnterpriseList()){
+                for(Organization org : ep.getOrganazDirectory().getOrganizationList()){
+                    for(UserAccount ua : org.getUserAccountDirectory().getUserAccountList()){
+                        if(userName.equals(ua.getUsername())){
+                            JOptionPane.showMessageDialog(null, "User name already exist, please try a new one.");
+                            return;
+                        }
+                    }
                 }
             }
         }

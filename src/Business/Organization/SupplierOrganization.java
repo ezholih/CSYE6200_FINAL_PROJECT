@@ -19,17 +19,17 @@ public class SupplierOrganization extends Organization{
 
     private MaintRequestList maintRequestList;
     private MDProductCatalog mDProductCatalog;
-    private OrderCatalog orderLis; 
+    private OrderCatalog orderList; 
    
     public SupplierOrganization() {
         super(Organization.Type.Supplier.getValue());
         maintRequestList = new MaintRequestList();
         mDProductCatalog = new MDProductCatalog();
-        orderLis = new OrderCatalog();
+        orderList = new OrderCatalog();
     }
 
-    public OrderCatalog getOrderLis() {
-        return orderLis;
+    public OrderCatalog getOrderList() {
+        return orderList;
     }
     
 

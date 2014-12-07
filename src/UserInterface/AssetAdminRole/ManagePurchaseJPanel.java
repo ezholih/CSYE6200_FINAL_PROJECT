@@ -283,11 +283,24 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
 //        Object selected = jCBSupplier.getSelectedItem();
 //        if (selected instanceof Enterprise) {
 //            for(Organization org : ((SupplierEnterpise)selected).getOrganazDirectory().getOrganizationList()){
-//                order = ((SupplierOrganization)org).getOrderLis().createOrder();
+//                order = ((SupplierOrganization)org).getOrderList().createOrder();
 //            }
 //        }
-        OrderItem oi = order.createOrderItem(p, quantity);
-        oi.setEnterprise(((SupplierEnterpise)jCBSupplier.getSelectedItem()));
+        Object selection = jCBSupplier.getSelectedItem();
+        if(selection instanceof SupplierEnterpise){
+            for(OrderItem oi : order.getOiList()){
+                if(oi.getMdProduct().equals(p)){
+                    JOptionPane.showMessageDialog(null, "Items has already been in shopping cart!");
+                    return;
+                }
+            }
+            OrderItem oi = order.createOrderItem(p, quantity);
+            oi.setEnterprise((SupplierEnterpise)selection);
+        }else{
+            JOptionPane.showMessageDialog(null, "No supplier is selected!");
+            return;
+        }
+        
         refreshOrderItemTable();
     }//GEN-LAST:event_jBTAddToCartActionPerformed
 
@@ -343,7 +356,7 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
                 if (ep.getEnterpriseType().equals(Enterprise.EnterpriseType.Supplier)) {
                     for (Organization org : ep.getOrganazDirectory().getOrganizationList()) {
                         if (org instanceof SupplierOrganization) {
-                            Order od = ((SupplierOrganization)org).getOrderLis().searchOrderItem(oi);
+                            Order od = ((SupplierOrganization)org).getOrderList().searchOrderItem(oi);
                             od.deleteOI(oi);
                         }
                     }
@@ -357,12 +370,18 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
         if (order == null || order.getOiList().size() <= 0) {
             JOptionPane.showConfirmDialog(null, "Shopping cart is enmpty!", "WARNING", JOptionPane.OK_OPTION);
         } else {
+            Object selected = jCBSupplier.getSelectedItem();
+            if(selected instanceof Enterprise){
+                selected = (Enterprise)selected;
+            }
             Order od = null;
+            boolean flag = false;
             for (Enterprise ep : network.getEnterpriseDirectory().getEnterpriseList()) {
-                if (ep.getEnterpriseType().equals(Enterprise.EnterpriseType.Supplier)) {
+                if (ep.equals(selected)) {
                     for (Organization org : ep.getOrganazDirectory().getOrganizationList()) {
                         if (org instanceof SupplierOrganization) {
-                            od = ((SupplierOrganization) org).getOrderLis().createOrder();
+                            od = ((SupplierOrganization) org).getOrderList().createOrder();
+                            flag = true;
                             for(OrderItem oi : order.getOiList()){
                                 if(oi.getEnterprise().equals(ep)){
                                     od.getOiList().add(oi);
@@ -372,9 +391,13 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
                     }
                 }
             }
+            if(!flag){
+                JOptionPane.showMessageDialog(null, "You have not selected any supplier yet, no order is placed!");
+            }
 
-            JOptionPane.showMessageDialog(null, "Order has been created!", "Thanks", JOptionPane.YES_OPTION);
-            refreshOrderItemTableByOrder(new Order());
+            JOptionPane.showMessageDialog(null, "Order has been created!");
+            order = getOrderFromPHS();
+            refreshOrderItemTableByOrder(order);
         }
     }//GEN-LAST:event_jBTCheckOutActionPerformed
 
@@ -441,6 +464,7 @@ public class ManagePurchaseJPanel extends javax.swing.JPanel {
     
     private void populateComboBox(){
         jCBSupplier.removeAllItems();
+        jCBSupplier.addItem("Selecte supplier");
         
         for(Enterprise ep : network.getEnterpriseDirectory().getEnterpriseList()){
             if(ep.getEnterpriseType().equals(Enterprise.EnterpriseType.Supplier)){

@@ -20,7 +20,7 @@ public class PHSAdminRole extends Role{
 
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem system, Network network) {
-        return new AdminWorkAreaJPanel(userProcessContainer, enterprise);
+        return new AdminWorkAreaJPanel(userProcessContainer, enterprise, system, account);
     }
 
     

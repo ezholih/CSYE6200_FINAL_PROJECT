@@ -196,7 +196,7 @@ public class ManageNewProductJPanel extends javax.swing.JPanel {
         
         MedicalDeviceProduct mdp = supplierOrganization.getmDProductCatalog().addProduct();
         mdp.setName(txtName.getText());
-        mdp.setName(txtModel.getText());
+        mdp.setModel(txtModel.getText());
         mdp.setClassification(txtClass.getText());
 
         mdp.setPrice(price);

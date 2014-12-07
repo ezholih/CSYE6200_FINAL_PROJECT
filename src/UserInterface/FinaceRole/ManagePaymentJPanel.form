@@ -41,7 +41,9 @@
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="accountJLabel" max="32767" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="txtAccount" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -53,13 +55,7 @@
                   <Group type="102" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="accountJLabel" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="viewOrderJButton" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="viewOrderJButton" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" alignment="0" pref="480" max="32767" attributes="0"/>
               </Group>
@@ -85,7 +81,10 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="cashJRadioButton" min="-2" max="-2" attributes="0"/>
                           <Component id="checkJRadioButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="transferJRadioButton" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="transferJRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="accountJLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -93,10 +92,7 @@
                           <Component id="backJButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="txtAccount" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="accountJLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="txtAccount" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
           </Group>

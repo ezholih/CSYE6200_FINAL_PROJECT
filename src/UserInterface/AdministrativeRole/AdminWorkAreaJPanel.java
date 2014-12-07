@@ -9,7 +9,15 @@ package UserInterface.AdministrativeRole;
 import Business.EcoSystem;
 import Business.EnterPrise.Enterprise;
 import Business.EnterPrise.HospitalEnterpise;
+import Business.MedicalDevice.MedicalDevice;
+import Business.Organization.AssetMgtOrganization;
+import Business.Organization.Organization;
+import Business.Role.AssetMgtRole;
+import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -18,14 +26,19 @@ import javax.swing.JPanel;
  */
 public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     
-    JPanel userProcessContainer;
-    Enterprise enterprise;
+    private JPanel userProcessContainer;
+    private Enterprise enterprise;
+    private EcoSystem system;
+    private UserAccount userAccount;
+    
     
     /** Creates new form AdminWorkAreaJPanel */
-    public AdminWorkAreaJPanel(JPanel userProcessContainer, Enterprise enterprise) {
+    public AdminWorkAreaJPanel(JPanel userProcessContainer, Enterprise enterprise, EcoSystem ecosys, UserAccount ua) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.enterprise = enterprise;
+        this.system = ecosys;
+        this.userAccount = ua;
         
         if(enterprise instanceof HospitalEnterpise){
             roomJButton.setVisible(true);
@@ -123,7 +136,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void userJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userJButtonActionPerformed
         // TODO add your handling code here:
-        ManageUserAccountJPanel muajp = new ManageUserAccountJPanel(userProcessContainer, enterprise);
+        ManageUserAccountJPanel muajp = new ManageUserAccountJPanel(userProcessContainer, enterprise, system);
         userProcessContainer.add("ManageUserAccountJPanel", muajp);
 
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();

@@ -319,7 +319,7 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
         DefaultTableModel orderTable = (DefaultTableModel)orderJTable.getModel();
         orderTable.setRowCount(0);
         
-        for(Order od:supplierOrganization.getOrderLis().getOrderList()){
+        for(Order od:supplierOrganization.getOrderList().getOrderList()){
             boolean flag = false;
             Object[] row = new Object[5];
             row[0] = od;
@@ -327,7 +327,7 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
             
             
             for(Payment pay : finaceOrganization.getPaymentDirectory().getPaymentList()){
-                if(pay.getBill().getOrder().getOrderID() == od.getOrderID()){
+                if(pay.getBill().getOrder().equals(od)){
                     row[2] = "Payed";
                     row[3] = pay.getPaymentType();
                     flag = true;

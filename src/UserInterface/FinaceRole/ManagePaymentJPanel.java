@@ -171,7 +171,9 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
                             .addComponent(backJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(111, 111, 111)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(accountJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addComponent(txtAccount))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(45, 45, 45)
@@ -179,11 +181,7 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(187, 187, 187)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(accountJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(108, 108, 108))
-                            .addComponent(viewOrderJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(viewOrderJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -204,20 +202,22 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cashJRadioButton)
                             .addComponent(checkJRadioButton)
-                            .addComponent(transferJRadioButton))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(transferJRadioButton)
+                                .addComponent(accountJLabel)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(makePaymentJButton)
                             .addComponent(backJButton)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(accountJLabel)))
+                    .addComponent(txtAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void checkJRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkJRadioButtonActionPerformed
         // TODO add your handling code here:
+        accountJLabel.setEnabled(false);
+        txtAccount.setEditable(false);
         paymentType = "Check";
     }//GEN-LAST:event_checkJRadioButtonActionPerformed
 
@@ -272,6 +272,8 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
 
     private void cashJRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashJRadioButtonActionPerformed
         // TODO add your handling code here:
+        accountJLabel.setEnabled(false);
+        txtAccount.setEditable(false);
         paymentType = "Cash";
     }//GEN-LAST:event_cashJRadioButtonActionPerformed
 
@@ -308,7 +310,7 @@ public class ManagePaymentJPanel extends javax.swing.JPanel {
                 if(pay.getBill().equals(bill)){
                     result = true;
                     break;
-                }
+                }else result = false;
             }
             if(!result){
                 Object[] row = new Object[5];
